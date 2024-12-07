@@ -1,0 +1,390 @@
+\documentclass[11pt]{article}
+
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[export]{adjustbox}  % for correct logo rendering
+\usepackage{fancyhdr}  % for header/footer formatting
+\usepackage{hyperref}  % for hyper-references
+\usepackage{datetime}  % to update month in footer
+\usepackage{array}  % more flexible tables
+\usepackage[includeheadfoot,
+            left=1in,
+            right=1in,
+            top=0.75in,
+            bottom=0.75in,
+            headheight=40pt]{geometry} % geometry needs to know headheight to correctly render the footer
+\usepackage{tikz} % For drawing grid boxes
+
+% desired format for footer
+\newdateformat{monthyeardate}{%
+  \monthname[\THEMONTH] \THEYEAR}
+
+% set up header/footer
+\pagestyle{fancy}
+\fancyhf{}  % clear all headers/footers
+\renewcommand{\headrulewidth}{0pt}  % remove header rule
+\renewcommand{\footrulewidth}{0pt}  % remove footer rule
+
+% set up header
+
+\fancypagestyle{firstpage}{
+    \fancyhead[L]{
+    \vspace{0pt}
+    \hspace{-8pt}
+    \includegraphics[width=0.1\textwidth]{docimgs/eth_logo_kurz_pos.png}\\
+    \textbf{Swiss Federal Institute of Technology}\\
+    \textbf{Zurich}\\
+    %\textbf{ } \\
+    
+    }    
+
+    \fancyhead[R]{
+    \raggedleft
+    %\vspace{20pt}
+    \includegraphics[width=0.13\textwidth]{docimgs/eth_ditet_logo_pos.png}\\
+     \textbf{Dept. of Information Technology and} \\ \textbf{Electrical Engineering}  \\
+     %\textbf{Chair for Mathematical Information} \\ \textbf{Information Science} \\
+
+    }
+}
+
+% set up footer
+\fancyfoot[L]{mdietz, ÜS 1}
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{\monthyeardate\today}
+
+% set up section/subsection titles
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\arabic{subsection}}
+
+% command used for simply emphasizing suggestions
+\newcommand{\suggestion}[1]{{\itshape #1}}
+
+
+\begin{document}
+\thispagestyle{firstpage}
+
+\setlength{\headheight}{1 \baselineskip}  % accomodate header
+\setlength{\parindent}{0pt}  % remove initial paragraph indent
+\setlength{\parskip}{\baselineskip}  % add skip between paragraphs
+
+%\vspace*{72px}
+\vspace*{-5px}
+\section*{Übungsstunde 1}
+
+\section*{Themenüberblick}
+\begin{itemize}
+    \item \textbf{Einführung Signale:}
+    \item[] Einteilung der Signale und einfache Beispielsaufgaben zu Signalen
+    \item \textbf{Lineare Algebra Recap:}
+    \item[] Lineare Räume und Unterräume: \begin{itemize}
+        \item[] Lineare Unabhängigkeit, Basen, Koordinaten, Dimensionsbegriff, duale Basen, Funktionsräume, Normen, Skalarprodukte, Orthogonalität
+    \end{itemize}
+\end{itemize}
+
+\section*{Aufgaben für diese Woche}
+\vspace{-0.5cm}
+
+1, \textbf{2}, \textbf{3}, \textbf{4}, \textbf{5}, \textbf{6}, 7, \textbf{8}, \textbf{9}, 10, \textbf{11}, 12, 13, 14, \textbf{15}\\
+\vspace{-0.5cm}
+
+Die \textbf{fettgedruckten} Übungen empfehle ich, weil sie wesentlich zu eurem Verständnis der Theorie beitragen und/oder sehr prüfungsrelevant sind.
+
+\vfill \null
+\pagebreak
+
+
+
+\setcounter{section}{1}
+\renewcommand{\thesection}{1} % Custom section number
+\section{Einteilung der Signale}
+\vspace*{-0.5cm}
+
+\begin{center}
+    \includegraphics[width=0.78\linewidth]{docimgs/Signale.jpg}
+\end{center}
+
+\vspace*{-1cm}
+\subsection*{Beispielsaufgabe \textnormal{(aus Aufgabe 1, 2 und 3)}}
+\vspace*{-0.5cm}
+Für die abgebildeten Signale $x_1(t), x_2(t)$ (mit normierter Amplituden- und Zeitachse) zeichne man folgende Signale:
+
+\begin{multicols}{2}
+\begin{itemize}
+    \item[a)] $x_1(1-t)$ 
+    \item[b)] $x_1(2t+2)$
+    \item[c)] $\left[x_1(t) + x_1(2-t) \right]\sigma(1-t)$
+    \item[d)] $4x_2(t/4)$
+    \item[e)] $\frac{1}{2}x_2(t)\sigma(t) + x_2(-t)\sigma(t)$
+    \item[f)] $x_1(t)x_2(-t)$
+\end{itemize}
+
+\end{multicols}
+\vspace*{-0.5cm}
+wobei
+$$\sigma(t) := \begin{cases}
+    1, \hspace{10pt} t\geq 0, \\
+    0, \hspace{9pt} t < 0.
+\end{cases} $$
+
+\vspace{-0.75cm}
+\begin{center}
+    \includegraphics[width=0.8\linewidth]{docimgs/bsp_ex_signale.png}
+\end{center}
+
+\pagebreak
+
+% Create a grid box resembling square paper
+\begin{tikzpicture}
+    % Define the box size and grid spacing
+    \draw[step=0.5cm,gray!50,very thin] (0,0) grid (16.5,21); % (0,0) is bottom-left corner, (10,10) is top-right corner
+\end{tikzpicture}
+
+\pagebreak
+
+\setcounter{section}{2}
+\renewcommand{\thesection}{2} % Custom section number
+\section{Lineare Algebra Recap}
+
+\subsection*{Lineare Räume}
+\vspace*{-0.5cm}
+\textbf{Definition:} Ein linearer Raum über $\mathbb{C}$ ist eine nichtleere Menge $X$ zusammen mit 
+\vspace*{-0.5cm}
+\begin{itemize}
+    \item[(i)] einer Abbildung $+:X\times X \to X$, genannt Addition und notiert mit $x_1 + x_2$,
+    \item[(ii)] einer Abbildung von $\mathbb{C} \times X$ nach $ X$, genannt skalare Multiplikation und notiert mit $\alpha x$,
+\end{itemize}
+\vspace*{-0.5cm}
+so, dass Addition und skalare Multiplikation folgende Eigenschaften erfüllen: 
+\vspace*{-0.5cm}
+\begin{itemize}[leftmargin=6em]
+    \item[(A1)] Kommutativität $(+)$: $x_1 + x_2 = x_2 + x_1$, für alle $x_1, x_2 \in X$.
+    \item[(A2)] Assoziativität $(+)$: $x_1 + (x_2 + x_3) = (x_1 + x_2) + x_3$, für alle $x_1, x_2, x_3 \in X$.
+    \item[(A3)] Nullelement $(+)$: $\exists ! 0 \in X$, so dass $0+x = x$, für alle $x \in X$. 
+    \item[(A4)] Inverses Element $(+)$: $\forall x \in X \hspace{5pt} \exists ! -\!x \in X$, so dass $x + (-x) = 0$.
+    \item[(SM1)] Assoziativität $(\cdot)$: $\alpha(\beta x) = (\alpha \beta)x$, für alle $\alpha, \beta \in \mathbb{C}$ und alle $x \in X$
+    \item[(SM2)] Einselement $(\cdot)$: $1x = x$, für alle $x\in X$.
+    \item[(A\&SM1)] Distributivgesetz: $\alpha(x_1 + x_2) = \alpha x_1 + \alpha x_2$, für alle $\alpha \in \mathbb{C}$, und alle $x_1, x_2 \in X$.
+    \item[(A\&SM2)] Distributivgesetz: $(\alpha + \beta)x = \alpha x + \beta x$, für alle $\alpha, \beta \in \mathbb{C}$, und alle $x \in X$.
+\end{itemize}
+\vspace*{-0.5cm}
+
+\textbf{Bemerkungen:}
+\vspace*{-0.5cm}
+\begin{itemize}[leftmargin=0pt]
+    \item[] Der lineare Raum $X$ muss abgeschlossen sein bezüglich Addition und Multiplikation. (implizite Bedingung)
+    \item[] Um zu beweisen, dass $X$ ein linearer Raum ist, müssen \textbf{alle} Eigenschaften gezeigt werden. Mit bereits \textbf{einem Gegenbeispiel} kann man jedoch schon beweisen, dsas das Gegebene kein linearer Raum ist.
+\end{itemize}
+
+
+\subsection*{Aufgabe 7}
+\vspace*{-0.5cm}
+Zeigen Sie, dass der Raum der komplexwertigen $m\times n$ Matrizen, also $\mathbb{C}^{m\times n}$, ein linearer Raum ist.
+
+% Create a grid box resembling square paper
+\begin{tikzpicture}
+    % Define the box size and grid spacing
+    \draw[step=0.5cm,gray!50,very thin] (0,0) grid (16.5,4.5); % (0,0) is bottom-left corner, (10,10) is top-right corner
+\end{tikzpicture}
+
+\pagebreak
+
+\subsection*{Lineare Unterräume}
+\vspace*{-0.5cm}
+\textbf{Definition:} Ein linearer Unterraum ist eine \textbf{nichtleere Teilmenge} $(\Tilde{X})$ eines linearen Raumes $X$, wenn folgende beide Eigenschaften gelten:
+\vspace*{-0.5cm}
+\begin{itemize}
+    \item[(i)] $x_1 + x_2 \in \Tilde{X}$, für alle $x_1, x_2 \in \Tilde{X}$.
+    \item[(ii)] $\alpha x \in \Tilde{X}$, für alle $\alpha \in \mathbb{C}$ und alle $x\in \Tilde{X}$.
+\end{itemize}
+\vspace*{-0.5cm}
+\textbf{Bemerkung:} Wenn $0$ (das Nullelement in $X$) nicht in $\Tilde{X}$ liegt, dann kann $\Tilde{X}$ kein Unterraum von $X$ sein, da die zweite Bedingung für $\alpha = 0$ nicht erfüllt sein kann.
+
+\vspace*{-0.5cm}
+\subsection*{Aufgabe 9}
+\vspace*{-0.5cm}
+Zeigen Sie, dass der Raum aller Vektoren $\mathbf{v} = (v_1 \dots v_n)^T \in \mathbb{C}^n$, ausgestattet mit Addition und Multiplikation, die für eine gegebene Menge $\mathcal{I} = \{ i_1, \dots, i_k\}$ mit $k\leq n$ die Bedingung $v_i = 0$, für alle $i\in \mathcal{I}$ erfüllen, ein linearer Unterraum von $\mathbb{C}^n$ ist.
+
+% Create a grid box resembling square paper
+\begin{tikzpicture}
+    % Define the box size and grid spacing
+    \draw[step=0.5cm,gray!50,very thin] (0,0) grid (16.5,4.5); % (0,0) is bottom-left corner, (10,10) is top-right corner
+\end{tikzpicture}
+
+\vspace*{-0.5cm}
+\subsection*{Basen in linearen Räumen}
+\vspace*{-0.5cm}
+\subsubsection*{Lineare Unabhängigkeit}
+\vspace*{-0.5cm}
+\begin{itemize}[leftmargin = 0pt]
+    \item[] \textbf{Definition:} Eine Teilmenge $\{ x_i\}_{i=1}^n$ des linearen Raumes $X$ ist linear abhängig, wenn es zugehörige Skalare $\{\alpha_i\}_{i=1}^n$ gibt, die \textbf{nicht alle gleich Null} sind und so, dass $$\sum_{i=1}^n \alpha_i x_i = 0.$$ Wenn $\sum_{i=1}^n \alpha_i x_i = 0$ impliziert, dass $\alpha_i = 0$ für alle $i \in \{ 1, \dots, n\}$, dann ist die Teilmenge $\{ x_i\}_{i=1}^n$ linear unabhängig.
+    \item[] \textbf{Bemerkung:} Um lineare Unabhängigkeit einer endlichen Menge an Vektoren zu überprüfen, kann man die Vektoren als \textbf{Spaltenvektoren} einer Matrix zusammenfassen und diese Matrix muss für lineare Unabhängigkeit \textbf{vollen Rang} haben.
+    \item[] \textbf{Definition:} Eine unendliche Menge von Vektoren ist linear unabhängig, wenn jede endliche Teilmenge linear unabhängig ist.
+\end{itemize}
+
+\subsection*{Basis}
+\vspace*{-0.5cm}
+\begin{itemize}[leftmargin=0pt]
+    \item[] Die Basis eines linearen Raums $X$ ist eine Menge von Vektoren in $X$, die linear unabhängig sind und jedes Element $x$ des gesamten Raumes $X$ durch eindeutige Linearkombination erzeugen können.
+    \item[] \textbf{Formale Definition:} Die Menge $\{\mathbf{e}_k\}_{k=1}^M, \; \mathbf{e}_k \in \mathbb{C}^M$, ist eine Basis für $\mathbb{C}^M$, wenn:
+    \begin{enumerate}
+        \item $\text{span}\{\mathbf{e}_k\}_{k=1}^M = \mathbb{C}^M$
+        \item $\{\mathbf{e}_k\}_{k=1}^M$ linear unabhängig ist.
+    \end{enumerate}
+\end{itemize}
+
+\begin{center}
+    \vspace*{-0.8cm}
+    \includegraphics[width=0.6\linewidth]{docimgs/Basen.jpg}
+\end{center}
+
+\vspace*{-1cm}
+$$\forall x \in X \hspace{10pt} \exists ! c_1, \dots, c_M, \text{ sodass } c_1 \mathbf{e}_1 + \dots + c_M \mathbf{e}_M = x$$
+Dabei sind $c_1, \dots, c_M$ die \textbf{Koordinaten} von $x$ in der gegebenen Basis. Diese Koordinaten erhält man durch \textbf{orthogonale Projektion} auf die Basisvektoren. Man nennt sie auch \textbf{Entwicklungskoeffizienten}. Diese berechnet man wie folgt:
+$$c_k := \langle \mathbf{x}, \; \mathbf{e}_k \rangle, \hspace{10pt} k=1, \dots, M$$
+
+Wir definieren die \textbf{Analysematrix}
+$$\mathbf{T}:= \begin{bmatrix}
+    \mathbf{e}_1^H \\
+    \vdots \\
+    \mathbf{e}_M^H
+\end{bmatrix},\hspace{5pt} \text{ sodass man als Koordinaten }\hspace{5pt}  \mathbf{c} = \begin{bmatrix}
+    c_1 \\
+    \vdots \\
+    c_M
+\end{bmatrix} = \begin{bmatrix}
+    \mathbf{e}_1^H \cdot \mathbf{x}\\
+    \vdots \\
+    \mathbf{e}_M^H \cdot \mathbf{x}
+\end{bmatrix} = \begin{bmatrix}
+    \langle \mathbf{x}, \; \mathbf{e}_1 \rangle \\
+    \vdots \\
+    \langle \mathbf{x}, \; \mathbf{e}_M \rangle 
+\end{bmatrix} = \mathbf{Tx}, \hspace{5pt} \text{erhält.}$$
+
+Die Analysematrix $\mathbf{T}$ sollte vollen Rang haben und quadratisch sein.
+
+\vspace*{-0.5cm}
+\subsubsection*{Dimensionsbegriff}
+\vspace*{-0.5cm}
+Die Dimension $M$ eines linearen Raumes $X$ ist die maximale Anzahl linear unabhängiger Elemente in diesem linearen Raum. Dies entspricht der Anzahl Basiselemente jeder Basis dieses linearen Raumes. Wenn es kein solches endliches $M$ gibt, dann ist $X$ unendlich-dimensional.
+
+\vspace*{-0.5cm}
+\subsubsection*{Beispiel}
+\vspace*{-0.5cm}
+% Create a grid box resembling square paper
+\begin{tikzpicture}
+    % Define the box size and grid spacing
+    \draw[step=0.5cm,gray!50,very thin] (0,0) grid (16.5,2.5); % (0,0) is bottom-left corner, (10,10) is top-right corner
+\end{tikzpicture}
+
+\pagebreak
+
+\subsection*{Orthonormalbasis}
+\vspace*{-0.5cm}
+Falls alle Basisvektoren paarweise orthogonal zueinander stehen und Norm $1$ haben, so spricht man von einer Orthonormalbasis.
+
+\vspace*{-0.5cm}
+\subsection*{Duale Basen}
+\vspace*{-0.5cm}
+\begin{itemize}[leftmargin=0pt]
+    \item[] Eine Menge $\{\Tilde{\mathbf{e}}_k\}_{k=1}^M, \; \Tilde{\mathbf{e}}_k \in \mathbb{C}^M, \; k = 1,\dots, M$ heisst dual zu einer Basis $\{\mathbf{e}_k\}_{k=1}^M$, wenn:
+    $$\mathbf{x} = \sum_{k=1}^M \langle \mathbf{x}, \; \mathbf{e}_k \rangle \Tilde{\mathbf{e}}_k, \hspace{5pt} \text{ für alle } \hspace{5pt} \mathbf{x} \in \mathbb{C}^M$$
+    \item[] In anderen Worten suchen wir eine andere Basis, sodass wir mit den gleichen Koordinaten den Vektor $\mathbf{x}$ konstruieren können.
+    \item[] Die duale Basis einer Orthonormalbasis ist sie selbst. $\Tilde{\mathbf{e}}_k = \mathbf{e}_k, \hspace{5pt} \text{ für alle } k=1, \dots, M$\\
+    Dies ist einfach zu sehen, da in diesem Fall $\mathbf{x} = \sum_{k=1}^M \langle \mathbf{x}, \; \mathbf{e}_k \rangle \mathbf{e}_k$ gilt.
+    \item[] Ansonsten verwendet man eine Synthesematrix $\Tilde{\mathbf{T}}^H = \left[\Tilde{\mathbf{e}}_1, \dots,\Tilde{\mathbf{e}}_1 \right]$.
+    \item[] Indem man $\Tilde{\mathbf{T}}^H = \mathbf{T}^{-1}$ setzt, zeigt dies nun, dass man zu $\{\mathbf{e}_k\}_{k=1}^M$ eine duale Basis $\{\Tilde{\mathbf{e}}_k\}_{k=1}^M$ finden kann, denn dann haben wir:
+    $$\Tilde{\mathbf{T}}^H \mathbf{T} \mathbf{x} = \left[\Tilde{\mathbf{e}}_1, \dots,\Tilde{\mathbf{e}}_1 \right] \begin{bmatrix}
+        \langle \mathbf{x}, \; \mathbf{e}_1 \rangle \\
+        \vdots \\
+        \langle \mathbf{x}, \; \mathbf{e}_1 \rangle
+    \end{bmatrix} = \sum_{k=1}^M \langle \mathbf{x}, \; \mathbf{e}_k \rangle \Tilde{\mathbf{e}}_k = \mathbf{x}, \hspace{5pt} \text{wie gewünscht.}$$
+    \item[] Im Falle eines Orthonormalsystems ist $\mathbf{T}$ unitär.
+\end{itemize}
+
+\vfill \null
+\pagebreak
+
+\subsection*{Aufgabe 11}
+\begin{itemize}[leftmargin=0pt]
+    \item[] Es seien:
+    \item[] $\Phi_1 = \{\mathbf{e}_1, \mathbf{e}_2\}$ mit $\mathbf{e}_1 = \begin{bmatrix}
+    1/2 \\ \sqrt{3}/2
+\end{bmatrix}, \; \mathbf{e}_2 = \begin{bmatrix}
+    0 \\ 1
+\end{bmatrix}$
+    \item[] $\Phi_2 = \{\mathbf{f}_1, \mathbf{f}_2\}$ mit $\mathbf{f}_1 = \begin{bmatrix}
+    1/2 \\ \sqrt{3}/2
+\end{bmatrix}, \; \mathbf{f}_2 = \begin{bmatrix}
+    -\sqrt{3}/2 \\ 1/2
+\end{bmatrix}$
+\end{itemize}
+\vspace*{-1cm}
+\begin{itemize}
+    \item[a)] Bestimmen Sie die zu $\Phi_1$ und $\Phi_2$ zugehörigen Matrizen $\mathbf{T}_1$ und $\mathbf{T}_2$. 
+    \item[b)] Begründen Sie, warum es sich sowohl bei $\Phi_1$ als auch bei $\Phi_2$ um eine Basis handelt.
+    \item[c)] Bestimmen Sie die dualen Basen $\Tilde{\Phi}_1$ und $\Tilde{\Phi}_2$.
+    \item[e)] Sind die Basen $\Tilde{\Phi}_1$ und $\Tilde{\Phi}_2$ normerhaltend? Begründen Sie ihre Antwort.
+\end{itemize}
+
+% Create a grid box resembling square paper
+\begin{tikzpicture}
+    % Define the box size and grid spacing
+    \draw[step=0.5cm,gray!50,very thin] (0,0) grid (16.5,13); % (0,0) is bottom-left corner, (10,10) is top-right corner
+\end{tikzpicture}
+
+\vfill \null
+\pagebreak
+
+\subsection*{Funktionsräume}
+\vspace*{-0.5cm}
+Für eine nichtleere Menge $S$ definiert man den linearen Raum $X$ als Menge aller Funktionen von $S$ nach $\mathbb{C}$, wobei die Addition und die skalare Multiplikation wie folgt definiert sind:
+\vspace*{-0.5cm}
+\begin{itemize}
+    \item[(+)] $\forall x_1, x_2 \in X \hspace{23pt} +:X \times X \to X \hspace{12pt} (x_1 + x_2)(s) = x_1(s) + x_2(s) \hspace{8pt} \forall s \in S$
+    \item[($\cdot$)] $\forall \alpha \in \mathbb{C}, \; x \in X \hspace{12pt} \cdot : \mathbb{C} \times X \to X \hspace{14pt} (\alpha \cdot x)(s) = \alpha x(s)$
+\end{itemize}
+
+\subsection*{Norm}
+\vspace*{-0.5cm}
+\textbf{Definition:} Eine reelle Funktion $||\cdot ||$, definiert auf einem linearen Raum $X$, ist eine Norm auf $X$, wenn folgende Eigenschaften erfüllt sind:
+\vspace*{-0.5cm}
+\begin{itemize}
+    \item[(N1)] Nichtnegativität: $||x|| \geq 0$, für alle $x\in X$
+    \item[(N2)] Dreiecksungleichung: $||x_1 + x_2|| \leq ||x_1|| + ||x_2||$, für alle $x_1, x_2\in X$
+    \item[(N3)] Homogenität: $||\alpha x|| = |\alpha| ||x||$, für alle $x\in X$
+    \item[(N4)] Definitheit: $||x||=0$ dann, und nur dann, wenn $x=0$
+\end{itemize}
+%\vspace*{-0.5cm}
+
+\subsection*{Normierte Lineare Räume}
+\vspace*{-0.5cm}
+\textbf{Definition:} Ein normierter linearer Raum ist ein Paar $(X, ||\cdot||)$ bestehend aus einem linearen Raum $X$ und einer Norm auf $X$.
+
+\textbf{Beispiele für normierte lineare Räume:}
+\vspace*{-0.5cm}
+\begin{itemize}
+    \item linearer Raum $\mathbb{R}^n$ oder $\mathbb{C}^n$ mit einer der folgenden Normen: \begin{itemize}
+        \item[] Summennorm (1-Norm): $\hspace{22pt}||\mathbf{x}||_1 = \sum_{i=1}^n |x_i|$
+        \item[] Euklidische Norm (2-Norm): $\hspace{3pt}||\mathbf{x}||_2 = \sqrt{\sum_{i=1}^n |x_i|^2}$
+        \item[] p-Norm: $\hspace{100pt}||\mathbf{x}||_p = \left(\sum_{i=1}^n |x_i|^p\right)^{1/p}$ für $1\leq p < \infty$
+        \item[] Maximumsnorm: $\hspace{60pt}||\mathbf{x}||_\infty = \underset{i=1,\dots,n}{\max}|x_i|$
+    \end{itemize}
+    \item linearer Raum $L^p := \{ x:\mathbb{R}\to \mathbb{C} : \int_{-\infty}^\infty |x(t)|^p \text{dt} < \infty \} $ mit der Norm $||x||_{L^p} := \left( \int_{-\infty}^\infty |x(t)|^p \text{dt}\right)^{1/p}$
+    \item linearer Raum $l^p :=\{ x:\mathbb{Z}\to \mathbb{C} : \sum_{n=-\infty}^\infty |x[n]|^p < \infty \} $ mit der Norm $||x||_{l^p} := \left( \sum_{n=-\infty}^\infty |x[n]|^p \right)^{1/p}$
+\end{itemize}
+
+In einem normierten linearen Raum können wir den Abstand zwischen zwei Elementen mit der Norm messen:
+$$d:X\times X \to \mathbb{R}_{\geq 0} \hspace{20pt} d(x_1, x_2):= ||x_1 - x_2||$$
+
+\vfill \null
+\pagebreak
+
+
+
+
+\end{document}
