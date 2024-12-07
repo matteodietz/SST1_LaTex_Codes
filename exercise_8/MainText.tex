@@ -1,0 +1,362 @@
+\documentclass[11pt]{article}
+
+\usepackage{centernot}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\definecolor{myblue}{RGB}{0, 0, 255} 
+\definecolor{mygreen}{RGB}{0, 180, 80}
+\definecolor{myred}{RGB}{153, 0, 0}
+\definecolor{myorange}{RGB}{255, 153, 51}
+\definecolor{mypurple}{RGB}{102, 0, 204}
+\usepackage{verbatim}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[export]{adjustbox}  % for correct logo rendering
+\usepackage{fancyhdr}  % for header/footer formatting
+\usepackage{hyperref}  % for hyper-references
+\usepackage{datetime}  % to update month in footer
+\usepackage{array}  % more flexible tables
+\usepackage[includeheadfoot,
+            left=1in,
+            right=1in,
+            top=0.75in,
+            bottom=0.75in,
+            headheight=40pt]{geometry} % geometry needs to know headheight to correctly render the footer
+\usepackage{tikz} % For drawing grid boxes
+
+\definecolor{darkblue}{RGB}{0, 0, 139}
+\definecolor{lightblue}{RGB}{173, 216, 230}
+
+% desired format for footer
+\newdateformat{monthyeardate}{%
+  \monthname[\THEMONTH] \THEYEAR}
+
+% set up header/footer
+\pagestyle{fancy}
+\fancyhf{}  % clear all headers/footers
+\renewcommand{\headrulewidth}{0pt}  % remove header rule
+\renewcommand{\footrulewidth}{0pt}  % remove footer rule
+
+% set up header
+
+\fancypagestyle{firstpage}{
+    \fancyhead[L]{
+    \vspace{0pt}
+    \hspace{-8pt}
+    \includegraphics[width=0.1\textwidth]{docimgs/eth_logo_kurz_pos.png}\\
+    \textbf{Swiss Federal Institute of Technology}\\
+    \textbf{Zurich}\\
+    %\textbf{ } \\
+    
+    }    
+
+    \fancyhead[R]{
+    \raggedleft
+    %\vspace{20pt}
+    \includegraphics[width=0.13\textwidth]{docimgs/eth_ditet_logo_pos.png}\\
+     \textbf{Dept. of Information Technology and} \\ \textbf{Electrical Engineering}  \\
+     %\textbf{Chair for Mathematical Information} \\ \textbf{Information Science} \\
+
+    }
+}
+
+% set up footer
+\fancyfoot[L]{mdietz, ÜS 8}
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{\monthyeardate\today}
+
+% set up section/subsection titles
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\arabic{subsection}}
+
+% command used for simply emphasizing suggestions
+\newcommand{\suggestion}[1]{{\itshape #1}}
+
+%--- commands for transform arrows----------------
+\newcommand{\transform}[2]{%
+    \begin{tikzpicture}
+        % Open circle
+        \draw[thick] (0,0) circle (0.1);
+        % Line with number above and adjustable length
+        \draw[thick] (0.1,0) -- (#2,0) node[midway, above] {#1};
+        % Filled circle
+        \filldraw[thick] (#2,0) circle (0.1);
+    \end{tikzpicture}%
+}
+\newcommand{\invtransform}[2]{%
+    \begin{tikzpicture}
+        % filled circle
+        \filldraw[thick] (0,0) circle (0.1);
+        % Line with number above and adjustable length
+        \draw[thick] (0.1,0) -- (#2 -0.1,0) node[midway, above] {#1};
+        % open circle
+        \draw[thick] (#2,0) circle (0.1);
+    \end{tikzpicture}%
+}
+\newcommand{\verticaltransform}[4]{%
+    \begin{tikzpicture}
+        % Open circle at the bottom with text below
+        \filldraw[thick] (0,0) circle (0.1) node[below=3pt] {$#4$};
+        % Vertical line with number on the left
+        \draw[thick] (0,0.1) -- (0,#2 -0.1) node[midway, left] {#1};
+        % Filled circle at the top with text above
+        \draw[thick] (0,#2) circle (0.1) node[above=3pt] {$#3$};
+    \end{tikzpicture}%
+}
+\newcommand{\verticalinvtransform}[4]{%
+    \begin{tikzpicture}
+        % Open circle at the bottom with text below
+        \draw[thick] (0,0) circle (0.1) node[below=3pt] {$#4$};
+        % Vertical line with number on the left
+        \draw[thick] (0,0.1) -- (0,#2) node[midway, left] {#1};
+        % Filled circle at the top with text above
+        \filldraw[thick] (0,#2) circle (0.1) node[above=3pt] {$#3$};
+    \end{tikzpicture}%
+}
+
+\begin{document}
+\thispagestyle{firstpage}
+
+\setlength{\headheight}{1 \baselineskip}  % accomodate header
+\setlength{\parindent}{0pt}  % remove initial paragraph indent
+\setlength{\parskip}{\baselineskip}  % add skip between paragraphs
+
+\vspace*{-5px}
+\section*{Übungsstunde 8}
+
+\section*{Themenüberblick}
+\begin{itemize}
+    \item \textbf{Abtasttheorem}
+    \item[] Digitale Systeme
+    \item[] Abgetastete Systeme im Frequenzbereich
+    \item[] Aliasing, Interpolation, Kritische Abtastung
+    \item[] Interpretation als Entwicklung in ein Orthonormalsystem
+\end{itemize}
+
+\section*{Aufgaben für diese Woche}
+\vspace{-0.5cm}
+
+\textbf{78}, \textbf{79}, \textbf{80}, 81, \textbf{82}, 83, 84, \textbf{85}, 86, \textbf{87}, 88, \textbf{89}, \textbf{90}, 91, \textbf{92}, \textbf{93}, \textbf{94}, 95, \textbf{96}\\
+\vspace{-0.5cm}
+
+Die \textbf{fettgedruckten} Übungen empfehle ich, weil sie wesentlich zu eurem Verständnis der Theorie beitragen und/oder sehr prüfungsrelevant sind.
+
+\vfill \null
+\pagebreak
+
+\section*{Abtasttheorem}
+\vspace*{-0.5cm}
+
+\subsection*{Digitale Systeme}
+\vspace*{-0.5cm}
+Das Abtasttheorem bildet die Grundlage für die digitale Signalverarbeitung, da es die Brücke zwischen kontinuierlichen und diskreten Signalen schlägt. Mit digitalen Signalen zu arbeiten ist essenziell, da Computer nur digitale Daten – also zeit- und amplitudendiskrete Werte – verarbeiten können. Im Vergleich zu kontinuierlichen Signalen, die unendlich viele Informationen enthalten, ermöglicht die Digitalisierung eine effiziente Speicherung und Verarbeitung der Daten durch eine endliche Anzahl von Bits.
+
+Die digitale Signalverarbeitung bietet zahlreiche Vorteile gegenüber der analogen: Sie ist vielseitig einsetzbar, z.B. für zeitvariante, adaptive und mehrdimensionale Anwendungen, garantiert eine hohe Rechengenauigkeit unabhängig von nichtidealen Bauelementen, wie z.B. RLC-Schaltkreisen, und ermöglicht kompakte, kostengünstige sowie energieeffiziente Implementierungen. Das Abtasttheorem stellt sicher, dass kontinuierliche Signale unter geeigneten Bedingungen verlustfrei in den diskreten Bereich übertragen werden können.
+
+\vspace*{-0.5cm}
+\begin{center}
+    \includegraphics[width=0.8\linewidth]{docimgs/digitale_sys1.png}
+\end{center}
+
+In SigSys 1 betrachten wir die Quantisierung, also das System $Q(\cdot)$ nicht. Wenn wir nun also ein Signal abgetastet und verarbeitet haben, modelliert durch einen digitalen Signalverarbeitungs-Block (DSV), dann wollen wir zum Schluss wieder eine zeitkontinuierliche Version des Signals rekonstruieren:
+
+\begin{center}
+    \includegraphics[width=0.4\linewidth]{docimgs/rekonstr.png}
+\end{center}
+
+\vspace*{-0.5cm}
+Die Frage ist nun, ob ein allgemeines Signal $x_a(t)$ von seinen Abtastwerten $x_a(nT)$ rekonstruiert werden kann, d.h. ob $y_a(t) = x_a(t)$.
+
+Die Antwort auf diese Frage ist nicht so einfach, es hängt nämlich von der Abtastperiode $T$ ab.
+
+\vfill \null
+\pagebreak
+
+\subsection*{Abgetastete Signale im Frequenzbereich}
+\vspace*{-0.5cm}
+\begin{enumerate}
+    \item Wir modellieren die Abtastung als eine Multiplikation mit einem Deltakamm:
+    $$x_{abg.}(t) = x(t)\delta_T(t) = x(t)\sum_{k=-\infty}^{\infty} \delta(t-kT) = \sum_{k=-\infty}^{\infty}x(t)\delta(t-kT) = \sum_{k=-\infty}^{\infty} x(kT)\delta(t-kT)$$
+    \vspace*{-0.5cm}
+    \item[] \begin{center}
+        \includegraphics[width=0.6\linewidth]{docimgs/abtastung1.jpg}
+    \end{center}
+    \vspace*{-0.25cm}
+    \item Wir fouriertransformieren das abgetastete Signal $x_{abg}(t)$.
+    \item[] Unter Verwendung von $\displaystyle\sum_{k=-\infty}^{\infty} \delta(t-kT_0) \hspace{10pt} \transform{20.}{1} \; \displaystyle\frac{1}{T_0}\displaystyle\sum_{k=-\infty}^{\infty} \delta \left( f - \frac{k}{T_0} \right)$ erhalten wir:
+    \begin{align*}
+        \hat{x}_{abg.}(f) &= \mathcal{F}\{x \cdot \delta_T\}(f) = \left( \hat{x} \ast \hat{\delta}_T \right)(f) = \left( \hat{x} \ast \frac{1}{T} \sum_{k=-\infty}^\infty \delta\left(\cdot - \frac{k}{T}\right) \right)(f) \\
+        &= \frac{1}{T} \sum_{k=-\infty}^\infty \left( \hat{x} \ast \delta \left( \cdot - \frac{k}{T} \right) \right)(f) = \frac{1}{T} \sum_{k = -\infty}^\infty \hat{x}\left( f- \frac{k}{T} \right)
+    \end{align*}
+    \vspace*{-0.5cm}
+    \item[] \begin{center}
+        \includegraphics[width=0.8\linewidth]{docimgs/abtastung2.jpg}
+    \end{center}
+    \vspace*{-0.5cm}
+    \item[] \textbf{Bemerkungen}: \begin{itemize}
+        \item $f_g$ ist die Bandbreite von $x(t)$
+        \item $f_s := \displaystyle\frac{1}{T}$ ist die Abtastfrequenz (Sampling Frequenz)
+        \item Die Abtastung von $x(t)$ erzeugt im Frequenzbereich um Skalierungsfaktor $\frac{1}{T}$ skalierte Kopien von $\hat{x}(f)$, die um $\frac{1}{T}$ verschoben sind, wobei $T$ die Abtastperiode ist.
+    \end{itemize}
+    \item[] \fcolorbox{darkblue}{lightblue}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{
+        Die Abtastung im Zeitbereich entspricht einer Periodisierung im Frequenzbereich.
+    }}%
+\end{enumerate}
+
+\pagebreak
+
+\begin{itemize}[leftmargin = 0pt]
+    \item[] Ziel ist es, das abgetastete Signal perfekt zu rekonstruieren. (Wir wollen das analoge Signal ohne Informationsverlust aus den Abtastwerten zurückgewinnen.) Dies können wir folgenderweise implementieren:
+    \vspace*{-0.5cm}
+    \item[] \begin{center}
+        \includegraphics[width=0.65\linewidth]{docimgs/filtering3.jpg}
+    \end{center}
+    \item[] wobei $\hat{h}_{id}(f) = \displaystyle\begin{cases}
+        1, \hspace{12pt} |f|\leq W \\
+        0, \hspace{12pt} |f|> W
+    \end{cases}$ ein idealer Tiefpassfilter mit Breite $W$ ist.
+    \item[] Zur Erinnerung: $\hat{x}_{abg.} = \displaystyle\frac{1}{T} \displaystyle\sum_{k = -\infty}^\infty \hat{x}\left( f- \frac{k}{T} \right)$
+    \item[] Der Term $\cdot T$ beim idealen Tiefpassfilter steht für die Skalierung, da wir ohne diesen Term $\frac{1}{T}x(t)$ anstatt $x(t)$ erhalten.
+    \item[] Graphisch sieht es wie folgt aus:
+    \item[] \begin{center}
+        \includegraphics[width=0.9\linewidth]{docimgs/filtering1.jpg}
+    \end{center}
+    \item[] Durch Rücktransformation erhält man das ursprüngliche Signal $x(t)$.
+    \item[] \textbf{Bemerkung}: Die Wahl von $W$ ist entscheidend und in einigen Fällen ist es gar nicht möglich, das Signal zu rekonstruieren.
+\end{itemize}
+\begin{itemize}[leftmargin=0pt]
+    \item[] Das Spektrum des abgetasteten Signals hängt von der Abtastfrequenz $f_s = \frac{1}{T}$ ab. Wir unterscheiden zwischen drei Fällen: \begin{enumerate}
+        \item \textcolor{myblue}{\textbf{Kritische Abtastung: $f_s = 2 f_g$}}
+        \item[] \begin{center}
+            \includegraphics[width=0.55\linewidth]{docimgs/krit_abtast.png}
+        \end{center}
+        \vspace*{-0.5cm}
+        \item[] Wir können das Signal mit einem idealen Tiefpassfilter der Breite $W = f_g$ rekonstruieren
+        \vfill \null
+        \pagebreak
+        \item \textcolor{myblue}{\textbf{Überabtastung: $f_s > 2f_g$}}
+        \item[] \begin{center}
+            \includegraphics[width=0.65\linewidth]{docimgs/ueberabtast.png}
+        \end{center}
+        \vspace*{-0.5cm}
+        \item[] In diesem Fall können wir sogar einen stabilen Tiefpassfilter verwenden.
+        \item[] \textbf{Bemerkung}: Überabtastung mit $f_s > 2f_g$ garantiert nicht nur, dass perfekte Rekonstruktion möglich ist, sondern hilft im Allgemeinen auch, die Empfindlichkeit auf Rauschen im Abtastprozess zu verringern und ermöglicht es, Tiefpassfilter mit speziellen Eigenschaften (z.B. Stabilität) einzusetzen.
+        \item \textcolor{myblue}{\textbf{Unterabtastung: $f_s < 2 f_g$}}
+        \item[] \begin{center}
+            \includegraphics[width=0.5\linewidth]{docimgs/aliasing1.png}
+        \end{center}
+        \vspace*{-0.5cm}
+        \item[] Es gibt \textbf{Aliasing}. Mit Hilfe eines Tiefpassfilters erhalten wir keine perfekte Version von $\hat{x}(f)$, eine Rekonstruktion des ursprünglichen Signals ohne Informationsverluste ist somit nicht möglich.
+    \end{enumerate}
+\end{itemize}
+
+\vspace*{-0.75cm}
+\subsubsection*{Intuition}
+\vspace*{-0.5cm}
+\begin{itemize}[leftmargin=0pt]
+    \item[] \begin{center}
+        \includegraphics[width=0.8\linewidth]{docimgs/aliasing2.jpg}
+    \end{center}
+    \item[] Im ersten Fall tasten wir genug schnell ab, sodass dabei keine Informationen verloren gehen. Im zweiten Fall tasten wir jedoch zu langsam ab, sodass zu viele Informationen über das Signal verloren gehen und eine perfekte Rekonstruktion nicht mehr möglich ist.
+\end{itemize}
+
+\vspace*{-0.5cm}
+\subsection*{Abtasttheorem}
+\vspace*{-0.5cm}
+\fcolorbox{darkblue}{lightblue}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{
+        \vspace*{0.25cm}
+        Ein Signal mit der Bandbreite $f_g$ kann aus seinen Abtastwerten, genommen mit einer Rate von $f_s \geq 2f_g$, eindeutig rekonstruiert werden. Die kritische Rate $f_s = 2 f_g$ wird als \textbf{Nyquistrate} bezeichnet.
+        \vspace*{0.25cm}
+    }}%
+
+\pagebreak
+
+\subsection*{Interpretation als Interpolation}
+\vspace*{-0.5cm}
+\begin{itemize}[leftmargin=0pt]
+    \item[] Wir betrachten das folgende System:
+    \item[] \begin{center}
+        \includegraphics[width=0.7\linewidth]{docimgs/filtering2.jpg}
+    \end{center}
+    \item[] wobei $\hat{h}_{id}(f) = \displaystyle\begin{cases}
+        1, \; |f| \leq W \\
+        0, \; |f| > W
+    \end{cases} \invtransform{}{1} \; h_{id}(t)=\displaystyle\frac{\sin(2 \pi W t)}{\pi t}$
+    \item[] Damit die perfekte Rekonstruktion möglich ist, muss $W \in [f_g, \; f_s -f_g]$ und $f_s \geq 2f_g$ gelten.
+    \begin{align*}
+        y(t) &= \left(\underbrace{(x \cdot \delta_T)}_{x_{abg}} \ast T h_{id}\right)(t) = T (x_{abg} \ast h_{id})(t) \\
+        &= T \left[ \left( \sum_{k = -\infty}^{\infty} x(kT) \delta(\cdot -kT) \right)  \ast h_{id} \right](t) \\
+        &= T \left( \sum_{k = -\infty}^{\infty} x(kT) \left(\delta(\cdot -kT) \right)  \ast h_{id}\right) (t) \\
+        &= T \sum_{k = -\infty}^{\infty} x(kT) h_{id}(t-kT), \hspace{12pt} \text{wobei}\\
+        h_{id} &= \displaystyle\frac{\sin(2 \pi W t)}{\pi t}
+    \end{align*}
+    \item[] Somit erhalten wir die \textbf{Rekonstruktionsformel}:
+    \item[] \fcolorbox{darkblue}{lightblue}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{
+        $$y(t) = T \sum_{k = -\infty}^\infty x(kT) \frac{\sin\left( 2 \pi W (t-kT)\right)}{\pi (t-kT)}$$
+    }}%
+\end{itemize}
+
+\vfill \null
+\pagebreak
+
+\subsection*{Kritische Abtastung}
+\vspace*{-0.5cm}
+\begin{itemize}[leftmargin=0pt]
+    \item[] Bei der kritischen Abtastung haben wir $f_s = 2 f_g$, d.h. $f_g = f_s - f_g$
+    \item[] Somit haben wir $W = f_g = \frac{f_s}{2} = \frac{1}{2T}$
+    \item[] Deswegen gilt bei der kritischen Abtastung: $y(t) = x(t) = \displaystyle\sum_{k=-\infty}^\infty x(kT)\displaystyle\frac{\sin\left(\frac{\pi}{T}(t-kT)\right)}{\frac{\pi}{T}(t-kT)}$
+    \item[] Im Allgemeinen ist die Rekonstruktion eines Signals aus seinen Abtastwerten gegeben durch:
+    \item[] 
+    \fcolorbox{darkblue}{lightblue}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{
+       $$y(t) = T \displaystyle\sum_{k = -\infty}^\infty x(kT)h(t-kT)$$
+    }}%
+    \item[] wobei $h(t)$ die Impulsantwort eines Filters ist. In unserem Fall haben wir $h(t) = h_{id}(t)$ gewählt, grundsätzlich kann man aber auch andere Filter verwenden.
+\end{itemize}
+
+\begin{center}
+    \includegraphics[width=0.6\linewidth]{docimgs/orthonormalsys.png}
+\end{center}
+
+\subsection*{Interpretation als Entwicklung in ein Orthonormalsystem}
+\vspace*{-0.5cm}
+
+Die Rekonstruktionsformel
+$$x(t) = \sum_{k=-\infty}^\infty x(kT)\displaystyle\frac{\sin\left(\frac{\pi}{T}(t-kT)\right)}{\frac{\pi}{T}(t-kT)}$$
+entspricht einer Entwicklung eines bandbegrenzten Signals $x(t)$ in ein Orthonormalsystem. Wir betrachten hierbei den linearen Unterraum $X$ der $f_g-$bandbegrenzten Signale in $L^2(\mathbb{R})$. Die Funktionen
+$$e_k(t) = \frac{1}{\sqrt{T}}\frac{\sin\left(\frac{\pi}{T}(t-kT)\right)}{\frac{\pi}{T}(t-kT)} = \sqrt{T} \frac{\sin\left(\frac{\pi}{T}(t-kT)\right)}{\pi(t-kT)}$$
+bilden ein Orthonormalsystem in $X$. Es gilt:
+$$x(t) = \sum_{k=-\infty}^\infty \sqrt{T}x(kT)\underbrace{\frac{1}{\sqrt{T}}\frac{\sin\left(\frac{\pi}{T}(t-kT)\right)}{\frac{\pi}{T}(t-kT)}}_{e_k} = \sum_{k = -\infty}^\infty \langle x, \; e_k \rangle \cdot e_k$$
+
+
+\vfill \null
+\pagebreak
+
+\subsection*{Prüfungsaufgabe: Frühjahr 2023, Aufgabe 2}
+\includegraphics[width=0.9\linewidth]{docimgs/2023_frühjahr_2.png}
+
+
+\vfill \null
+\pagebreak
+
+\begin{tikzpicture}
+    % Define the box size and grid spacing
+    \draw[step=0.5cm,gray!50,very thin] (0,0) grid (16.5,21
+    ); % (0,0) is bottom-left corner, (10,10) is top-right corner
+\end{tikzpicture}
+
+\pagebreak
+
+\begin{tikzpicture}
+    % Define the box size and grid spacing
+    \draw[step=0.5cm,gray!50,very thin] (0,0) grid (16.5,21
+    ); % (0,0) is bottom-left corner, (10,10) is top-right corner
+\end{tikzpicture}
+
+\end{document}
