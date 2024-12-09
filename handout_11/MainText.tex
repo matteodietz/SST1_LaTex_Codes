@@ -151,32 +151,273 @@ Die \textbf{fettgedruckten} Übungen empfehle ich, weil sie wesentlich zu eurem 
 \vspace*{-0.5cm}
 \subsection*{Herleitung}
 \vspace*{-0.5cm}
+
+In der Realität können wir nur endliche Signale verarbeiten. Sei $x[n]$ ein Signal endlicher Länge $N$, dann ist $x[n]=0 \; \forall n \notin \{ 0, \; \dots, \; N-1 \}$
+Die DFT des Signals ist
+$$\hat{x}(\theta) = \sum_{n=-\infty}^\infty x[n]e^{-2 \pi i \theta n} = \sum_{n=0}^{N-1} x[n]e^{-2 \pi i \theta n}$$
+
+$\hat{x}(\theta)$ ist noch kontinuierlich. Wir tasten also $\hat{x}(\theta)$ im Frequenzbereich ab. Als Abtastfrequenz wählen wir $\frac{1}{N}$, damit wir wieder ein Signal der Länge $N$ erhalten.
+
+$$\hat{x}[k] := \hat{x}\left(\frac{k}{N}\right) = \sum_{n=0}^{N-1} x[n]e^{-2 \pi i \frac{k}{N}} $$
+
+$\hat{x}[k]$ entspricht genau der DFT von $x[n]$. \hspace*{0.5cm} ($x[n] \hspace{6pt} \transform{DFT}{1} \hspace{6pt} \hat{x}[k]$)
+
 \fcolorbox{darkblue}{lightblue}{%
     \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{
     \vspace*{0.15cm}
-    $$$$
+    \begin{itemize}
+        \item[] $(\textbf{DFT}) \hspace{80pt} \hat{x}[k] = \displaystyle\sum_{n=0}^{N-1} x[n]\omega_N^{kn} \hspace{80pt} \hat{x}[k+N] = \hat{x}[k]$
+        \item[] $(\textbf{IDFT}) \hspace{76pt} x[n]=\displaystyle\sum_{k=0}^{N-1} \hat{x}[k] \omega_N^{-kn} \hspace{72pt} x[n+N] = x[n]$
+        \item[] wobei $\hspace{88pt} \omega_N = e^{-\frac{2 \pi i}{N}}$
+    \end{itemize}
 }}%
+\subsubsection*{Bemerkungen}
+\vspace*{-0.5cm}
+\begin{enumerate}
+    \item $\omega_N^l$ ist $N-$periodisch, denn: $\omega_N^{l + N} = e^{-\frac{2 \pi i}{N}(l+N)} = e^{-\frac{2 \pi i l}{N}} e^{- 2 \pi i} = \omega_N^l$
+    \item Es folgt: $\hat{x}[k+N] = \hat{x}[k]$. \textbf{Die DFT-Signale sind als $N-$periodisch zu interpretieren!}
+    \item \textbf{Abtastung im Frequenzbereich entspricht Periodisierung im Zeitbereich}.
+\end{enumerate}
+
+\vfill \null
+\pagebreak
 
 \subsection*{Visualisierung}
 \vspace*{-0.5cm}
+\textcolor{myred}{figure}
 
 \subsection*{Matrixdarstellung}
 \vspace*{-0.5cm}
+Wir haben $\hat{x}[k] = \displaystyle\sum_{n=0}^{N-1} x[n]\omega_N^{kn}, \hspace{20pt} k \in \{ 0, \; 1, \; \dots, \; N-1 \}$ Somit:
+
+$$\underbrace{\begin{bmatrix}
+    \hat{x}[0] \\
+    \hat{x}[1] \\
+    \hat{x}[2] \\
+    \vdots \\
+    \hat{x}[N-1]
+\end{bmatrix}}_{=: \hat{\mathbf{x}}} = \underbrace{\begin{bmatrix}
+    1 & 1 & 1 & \cdots & 1 \\
+    1 & \omega_N & \omega_N^2 & \cdots & \omega_N^{N-1} \\
+    1 & \omega_N^2 & \omega_N^4 & \cdots & \omega_N^{2(N-1)} \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    1 & \omega_N^{N-1} & \omega_N^{2(N-1)} & \cdots & \omega_N^{(N-1)^2}
+\end{bmatrix}}_{\text{DFT-Matrix } F_N} \underbrace{\begin{bmatrix}
+    x[0] \\
+    x[1] \\
+    x[2] \\
+    \vdots \\
+    x[N-1]
+\end{bmatrix}}_{\mathbf{x}}$$
+
+
+\fcolorbox{darkblue}{lightblue}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{
+        Somit erhalten wir: \\
+        \noindent
+        \begin{minipage}[t]{0.45\textwidth}
+            \vspace*{0.1cm}
+            \begin{itemize}
+                \item[] \textbf{DFT}
+                \item[] $\hat{\mathbf{x}} = F_N \mathbf{x}$
+            \end{itemize}
+            \vspace*{0.1cm}
+        \end{minipage}%
+        \hfill%
+        \begin{minipage}[t]{0.45\textwidth}
+            \vspace*{0.1cm}
+            \begin{itemize}
+                \item[] \textbf{IDFT}
+                \item[] $\mathbf{x} = \frac{1}{N}F_N^H \hat{\mathbf{x}}$
+            \end{itemize}
+            \vspace*{0.1cm}
+        \end{minipage}
+    }%
+}
+
+Die Spalten von $F_N$ sind orthogonal aufeinander. Sei $\mathbf{f}_i$ die $i-$te Spalte von $F_N$. Es gilt $\langle \mathbf{f}_r, \; \mathbf{f}_s \rangle = \delta_{r,s}$
+
+Es gilt $F_N F_N^H = N I_N$, wobei $I_N$ die Identitätsmatrix der Dimension $N$ ist.
+
+Die DFT ist entspricht einer Entwicklung des Vektors $\mathbf{x}$ in eine orthonormale Basis (ONB) in $\mathbb{C}^N$:
+
+$$F_N x = ... = \sum$$
+
+\vfill \null
+\pagebreak
 
 \subsubsection*{Beispiel}
 \vspace*{-0.5cm}
 
-\subsection*{Lineare Faltung über DFT}
-\vspace*{-0.5cm}
+Was ist die 2-Punkte DFT von $\mathbf{x} = \begin{bmatrix}
+    x[0] \\
+    x[1]
+\end{bmatrix} = \begin{bmatrix}
+    1 \\
+    1
+\end{bmatrix}$
 
-\subsection*{Zirkulante Matrix}
+$$F_2 = \begin{bmatrix}
+    1 & 1 \\
+    1 & \omega_2
+\end{bmatrix} = \begin{bmatrix}
+    1 & 1 \\
+    1 & -1
+\end{bmatrix}, \hspace{12pt} \text{weil } \omega_2 = e^{-\frac{2 \pi i}{2}} = -1, \hspace{12pt} \text{dann:}$$
+
+$$ \hat{\mathbf{x}} = \begin{bmatrix}
+    \hat{x}[0] \\
+    \hat{x}[1]
+\end{bmatrix} = \begin{bmatrix}
+    1 & 1 \\
+    1 & -1
+\end{bmatrix} \begin{bmatrix}
+    1 \\
+    1
+\end{bmatrix} = \begin{bmatrix}
+    2 \\
+    0
+\end{bmatrix} $$
+
+\subsection*{Aufgabe 123}
 \vspace*{-0.5cm}
 
 \subsection*{Zyklische Faltung}
 \vspace*{-0.5cm}
+\fcolorbox{darkblue}{lightblue}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{
+    \vspace*{0.15cm}
+    $$\vspace*{-0.5cm} x_3[l] = \sum_{n=0}^{N-1} x_1[n]x_2[l-n] = \sum_{n=0}^{N-1} x_1[l-n] x_2[n]$$
+    $$\vspace*{-0.5cm}\verticaltransform{\text{DFT}}{1}{}{} \hspace{58pt}$$
+    $$\hat{x}_3[k] = \hat{x}_1[k] \cdot \hat{x}_2[k]$$
+}}%
+
+\subsubsection*{Bemerkungen}
+\begin{enumerate}
+    \item Die \textbf{elementweise Multiplikation im Frequenzbereich entspricht einer zyklischen Faltung im Zeitbereich}.
+    \item $x_1[n], \; x_2[n], \; x_3[n]$ werden \textbf{$N-$periodisch fortgesetzt}, das heisst konkret, dass $x_2[l-n] = x_2[l-n+N] \neq 0$ sein kann.
+\end{enumerate}
+
+
+In der Praxis wollen wir nicht unbedingt immer mit $N-$periodisch fortgesetzten Signalen arbeiten, sondern mit Signalen endlicher Länge. D.h. wir wollen konkret meistens ein Signal $x_1$ der Länge $L$, d.h. $x_1[n] = 0$ für $n < 0$ und $n > L-1$ mit einem Signal $x_2$ der Länge $P$, d.h. $x_2[n] = 0$ für $n < 0$ und $n > P-1$ falten. (\textbf{lineare Faltung}) Es gibt jedoch schnelle Algorithmen zur Berechnung der zyklischen Faltung, indem man über die FFT die zu faltenden Signale in den Frequenzbereich transformiert, diese elementweise multiplizieren und das erhaltene Signal rückttransformieren via IFFT. Deswegen versuchen wir jetzt einen Weg zu finden, wie wir die lineare Faltung über eine zyklische Faltung berechnen können.
+
+\subsection*{Lineare Faltung}
+\vspace*{-0.5cm}
+
+kochrezept etc
+
+Jetzt haben wir einen Weg gesehen, wie wir eine lineare Faltung durch eine zyklischen Faltung berechnen können mithilfe der DFT. Nun schauen wir uns die zyklische Faltung nochmals etwas genauer an, um ihre Anwendungen auf LTI-Systeme etwas genauer zu untersuchen.
+
+\subsubsection*{Zyklische Faltung in Matrixdarstellung}
+\vspace*{-0.5cm}
+Wir beginnen wieder bei:
+$$x_3[l] = \sum_{n=0}^{N-1} x_1[n]x_2[l-n] = \sum_{n=0}^{N-1} x_1[l-n] x_2[n]$$
+Dieser Ausdruck sieht in Matrixdarstellung wie folgt aus:
+
+\begin{align*}
+    \underbrace{\begin{bmatrix}
+        x_3[0] \\
+        x_3[1] \\
+        \vdots \\
+        x_3[N-1]
+    \end{bmatrix}}_{\mathbf{x}_3} &= \begin{bmatrix}
+        x_2[0] & x_2[-1] & \cdots & x_2[-N+1] \\
+        x_2[1] & x_2[0] & \cdots & x_2[-N+2] \\
+        \vdots & \vdots & \ddots & \vdots \\
+        x_2[N-1] & x_2[N-2] & \cdots & x_2[0]
+    \end{bmatrix} \begin{bmatrix}
+        x_1[0] \\
+        x_1[1] \\
+        \vdots \\
+        x_1[N-1]
+    \end{bmatrix} \\
+    &\overset{\star}{=} \underbrace{\begin{bmatrix}
+        x_2[0] & x_2[N-1] & \cdots & x_2[1] \\
+        x_2[1] & x_2[0] & \cdots & x_2[2] \\
+        \vdots & \vdots & \ddots & \vdots \\
+        x_2[N-1] & x_2[N-2] & \cdots & x_2[0]
+    \end{bmatrix}}_{\mathbf{X}_2} \underbrace{\begin{bmatrix}
+        x_1[0] \\
+        x_1[1] \\
+        \vdots \\
+        x_1[N-1]
+    \end{bmatrix}}_{\mathbf{x}_1}
+\end{align*}
+Wobei wir in ($\star$) die N-Periodizität des Signales $\mathbf{x}_2$ angewandt haben.
+
+$\mathbf{X}_2$ ist eine \textbf{zirkulante Matrix}. Eine zirkulante Matrix ist durch den (einen) Vektor $\mathbf{x}_2[n]$ vollständig bestimmt.
+
+Wir berechnen nun:
+
+\begin{align*}
+    \frac{1}{N}\mathbf{F}_N \mathbf{X}_2 \mathbf{F}_N^H &= \frac{1}{N} \begin{bmatrix}
+        ...
+    \end{bmatrix} \mathbf{F}_N^H \\
+    &= \frac{1}{N} \begin{bmatrix}
+        \hat{x}_2[0] & & \mathbf{0} \\
+        & \ddots & \\
+        \mathbf{0} & & \hat{x}_2[N-1]
+    \end{bmatrix} \underbrace{\begin{bmatrix}
+        ...
+    \end{bmatrix}}_{\mathbf{F}_N} \mathbf{F}_N^H \\
+    &= \frac{1}{N} \begin{bmatrix}
+        \hat{x}_2[0] & & \mathbf{0} \\
+        & \ddots & \\
+        \mathbf{0} & & \hat{x}_2[N-1]
+    \end{bmatrix} N \mathbf{I}_N = \begin{bmatrix}
+        \hat{x}_2[0] & & \mathbf{0} \\
+        & \ddots & \\
+        \mathbf{0} & & \hat{x}_2[N-1]
+    \end{bmatrix} \\
+    \text{Somit } \mathbf{X}_2 &= \frac{1}{N} \mathbf{F}_N^H  \begin{bmatrix}
+        \hat{x}_2[0] & & \mathbf{0} \\
+        & \ddots & \\
+        \mathbf{0} & & \hat{x}_2[N-1]
+    \end{bmatrix}   \mathbf{F}_N
+\end{align*}
+
+\subsubsection*{Bemerkungen}
+
+\begin{enumerate}
+    \item Die Eigenvektoren einer zirkulanten Matrix sind die Spalten der normalisierten DFT-Matrix $\frac{1}{\sqrt{N}}\mathbf{F}_N^H$ und die dazugehörigen Eigenwerte sind die DFT der ersten Spalte der zirkulanten Matrix gegeben. Im zeitkontinuierlichen Fall ...
+    \item Die Faltung wird durch die DFT diagonalisiert.
+\end{enumerate}
+
 
 \subsection*{Anwendung der DFT auf LTI-Systeme}
 \vspace*{-0.5cm}
+
+Falls $x_2 = h$ ..., dann (Faltung Zeitbereich -> Multiplikation Frequenzbereich)
+
+Wie bereits im zeitkontinuierlichen Fall kommutieren auch im (endlichen) zeitdiskreten Fall zwei LTI-Systeme mit Impulsantworten $\mathbf{h}_1$ und $\mathbf{h}_2$.
+
+\begin{align*}
+    \mathbf{H}_1 \mathbf{H}_2 &= \frac{1}{N} \mathbf{F}_N^H \begin{bmatrix}
+        \hat{h}_1[0] & & \mathbf{0} \\
+        & \ddots & \\
+        \mathbf{0} & & \hat{h}_1[N-1]
+    \end{bmatrix} \underbrace{\mathbf{F}_N \frac{1}{N} \mathbf{F}_N^H}_{\mathbf{I}_N}  \begin{bmatrix}
+        \hat{h}_2[0] & & \mathbf{0} \\
+        & \ddots & \\
+        \mathbf{0} & & \hat{h}_2[N-1]
+    \end{bmatrix}\mathbf{F}_N \\
+    &= \frac{1}{N} \mathbf{F}_N^H \begin{bmatrix}
+        \hat{h}_1[0]\hat{h}_2[0] & & \mathbf{0} \\
+        & \ddots & \\
+        \mathbf{0} & & \hat{h}_1[N-1]\hat{h}_2[N-1]
+    \end{bmatrix}\mathbf{F}_N \\
+    &= \frac{1}{N} \mathbf{F}_N^H \begin{bmatrix}
+        \hat{h}_2[0] & & \mathbf{0} \\
+        & \ddots & \\
+        \mathbf{0} & & \hat{h}_2[N-1]
+    \end{bmatrix} \underbrace{\mathbf{F}_N \frac{1}{N} \mathbf{F}_N^H}_{\mathbf{I}_N}  \begin{bmatrix}
+        \hat{h}_1[0] & & \mathbf{0} \\
+        & \ddots & \\
+        \mathbf{0} & & \hat{h}_1[N-1]
+    \end{bmatrix} \mathbf{F}_N \\
+    &= \mathbf{H}_2 \mathbf{H}_1
+\end{align*}
+
 
 \subsection*{Alte Prüfungsaufgabe}
 \vspace*{-0.5cm}
