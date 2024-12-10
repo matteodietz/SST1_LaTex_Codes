@@ -155,7 +155,7 @@ Die DFT ist \textcolor{myred}{sehr wichtig}! Es kommt immer eine ganze Aufgabe d
 \vspace*{-0.5cm}
 
 In der Realität können wir nur endliche Signale verarbeiten. Sei $x[n]$ ein Signal endlicher Länge $N$, dann ist $x[n]=0 \; \forall n \notin \{ 0, \; \dots, \; N-1 \}$
-Die DFT des Signals ist
+Die DTFT des Signals ist
 $$\hat{x}(\theta) = \sum_{n=-\infty}^\infty x[n]e^{-2 \pi i \theta n} = \sum_{n=0}^{N-1} x[n]e^{-2 \pi i \theta n}$$
 
 $\hat{x}(\theta)$ ist noch kontinuierlich. Wir tasten also $\hat{x}(\theta)$ im Frequenzbereich ab. Als Abtastfrequenz wählen wir $\frac{1}{N}$, damit wir wieder ein Signal der Länge $N$ erhalten.
