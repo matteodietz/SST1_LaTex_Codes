@@ -169,7 +169,7 @@ $\hat{x}[k]$ entspricht genau der DFT von $x[n]$. \hspace*{0.5cm} ($x[n] \hspace
     \vspace*{0.15cm}
     \begin{itemize}
         \item[] $(\textbf{DFT}) \hspace{80pt} \hat{x}[k] = \displaystyle\sum_{n=0}^{N-1} x[n]\omega_N^{kn} \hspace{80pt} \hat{x}[k+N] = \hat{x}[k]$
-        \item[] $(\textbf{IDFT}) \hspace{76pt} x[n]=\displaystyle\sum_{k=0}^{N-1} \hat{x}[k] \omega_N^{-kn} \hspace{72pt} x[n+N] = x[n]$
+        \item[] $(\textbf{IDFT}) \hspace{76pt} x[n]=\displaystyle\frac{1}{N}\displaystyle\sum_{k=0}^{N-1} \hat{x}[k] \omega_N^{-kn} \hspace{58pt} x[n+N] = x[n]$
         \item[] wobei $\hspace{88pt} \omega_N = e^{-\frac{2 \pi i}{N}}$
     \end{itemize}
 }}%
