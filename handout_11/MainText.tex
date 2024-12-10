@@ -131,18 +131,20 @@
 \begin{itemize}
     \item \textbf{Diskrete Fouriertransformation (DFT)}
     \item[] Herleitung, Visualisierung, Matrixdarstellung
-    \item[] Zirkulante Matrizen
     \item \textbf{Lineare und Zyklische Faltung}
+    \item[] Zirkulante Matrizen
     \item[] Anwendungen der DFT auf LTI-Systeme
 \end{itemize}
 
 \section*{Aufgaben für diese Woche}
 \vspace{-0.5cm}
 
-\textbf{123}, \\
+\textbf{123}, \textbf{124}, \textbf{125}, \textbf{126}, \textbf{127}, \textbf{128}, \textbf{130}, \textbf{131}\\
 \vspace{-0.5cm}
 
 Die \textbf{fettgedruckten} Übungen empfehle ich, weil sie wesentlich zu eurem Verständnis der Theorie beitragen und/oder sehr prüfungsrelevant sind.
+
+Die DFT ist \textcolor{myred}{sehr wichtig}! Es kommt immer eine ganze Aufgabe dazu an der Prüfung. (25 / 100P)
 
 \vfill \null
 \pagebreak
@@ -182,10 +184,13 @@ $\hat{x}[k]$ entspricht genau der DFT von $x[n]$. \hspace*{0.5cm} ($x[n] \hspace
 \vfill \null
 \pagebreak
 
-\subsection*{Visualisierung}
+\subsection*{Visualisierung der verschiedenen Fouriertransformationen}
 \vspace*{-0.5cm}
-\textcolor{myred}{figure}
+\begin{center}
+    \includegraphics[width=0.8\linewidth]{docimgs/DFT_visuals.jpeg}
+\end{center}
 
+\vspace*{-0.5cm}
 \subsection*{Matrixdarstellung}
 \vspace*{-0.5cm}
 Wir haben $\hat{x}[k] = \displaystyle\sum_{n=0}^{N-1} x[n]\omega_N^{kn}, \hspace{20pt} k \in \{ 0, \; 1, \; \dots, \; N-1 \}$ Somit:
@@ -241,10 +246,14 @@ Es gilt $F_N F_N^H = N I_N$, wobei $I_N$ die Identitätsmatrix der Dimension $N$
 
 Die DFT ist entspricht einer Entwicklung des Vektors $\mathbf{x}$ in eine orthonormale Basis (ONB) in $\mathbb{C}^N$:
 
-$$F_N x = ... = \sum$$
-
-\vfill \null
-\pagebreak
+$$\mathbf{x} = \underbrace{\frac{1}{N} \mathbf{F}_N^H \mathbf{F}_N}_{\mathbf{I}_N} \mathbf{x} = \frac{1}{N} \begin{bmatrix}
+    \mathbf{f}_0 & \mathbf{f}_1 & \cdots & \mathbf{f}_{N-1}
+\end{bmatrix} \begin{bmatrix}
+    \mathbf{f}_0^H \\
+    \mathbf{f}_1^H \\
+    \vdots \\
+    \mathbf{f}_{N-1}^H
+\end{bmatrix} \mathbf{x} = \frac{1}{N} \sum_{l=0}^{N-1} \langle \mathbf{x}, \; \mathbf{f}_l \rangle \mathbf{f}_l$$
 
 \subsubsection*{Beispiel}
 \vspace*{-0.5cm}
@@ -282,6 +291,29 @@ $$ \hat{\mathbf{x}} = \begin{bmatrix}
 \subsection*{Aufgabe 123}
 \vspace*{-0.5cm}
 
+Wenn die diskrete Fouriertransformierte (DFT) eines Signals bekannt ist, kann die Bestimmung der DFT einer Funktion dieses Signals oft einfacher erfolgen als durch direkte Berechnung. In dieser Aufgabe betrachten wir ein diskretes Signal $\mathbf{x} = (x[0], \; \dots, \; x[5]) \in \mathbb{C}^6$ der Länge 6. Die DFT von $\mathbf{x}$ der Länge 6 wird mit $\hat{\mathbf{x}}[0], \; \dots, \; \hat{\mathbf{x}}[5]$ bezeichnet.
+\vspace*{-0.5cm}
+\begin{itemize}
+    \item[a)] Finden Sie die DFT der Länge 3 des Signals $\mathbf{y}:= (x[0] + x[3], \; x[1] + x[4], \; x[2] + x[5])$ in Abhängigkeit von $\hat{x}[0], \; \dots, \; \hat{x}[5]$.
+    \item[b)] Finden Sie die DFT der Länge 2 des Signals $\mathbf{z}:= (x[0], \; x[3])$ in Abhängigkeit von $\hat{x}[0], \; \dots, \; \hat{x}[5]$.
+\end{itemize}
+
+\begin{tikzpicture}
+    % Define the box size and grid spacing
+    \draw[step=0.5cm,gray!50,very thin] (0,0) grid (16.5,4.5
+    ); % (0,0) is bottom-left corner, (10,10) is top-right corner
+\end{tikzpicture}
+
+\pagebreak
+
+\begin{tikzpicture}
+    % Define the box size and grid spacing
+    \draw[step=0.5cm,gray!50,very thin] (0,0) grid (16.5,21
+    ); % (0,0) is bottom-left corner, (10,10) is top-right corner
+\end{tikzpicture}
+
+\pagebreak
+
 \subsection*{Zyklische Faltung}
 \vspace*{-0.5cm}
 \fcolorbox{darkblue}{lightblue}{%
@@ -293,18 +325,63 @@ $$ \hat{\mathbf{x}} = \begin{bmatrix}
 }}%
 
 \subsubsection*{Bemerkungen}
+\vspace*{-0.5cm}
 \begin{enumerate}
     \item Die \textbf{elementweise Multiplikation im Frequenzbereich entspricht einer zyklischen Faltung im Zeitbereich}.
     \item $x_1[n], \; x_2[n], \; x_3[n]$ werden \textbf{$N-$periodisch fortgesetzt}, das heisst konkret, dass $x_2[l-n] = x_2[l-n+N] \neq 0$ sein kann.
 \end{enumerate}
-
-
+\vspace*{-0.5cm}
 In der Praxis wollen wir nicht unbedingt immer mit $N-$periodisch fortgesetzten Signalen arbeiten, sondern mit Signalen endlicher Länge. D.h. wir wollen konkret meistens ein Signal $x_1$ der Länge $L$, d.h. $x_1[n] = 0$ für $n < 0$ und $n > L-1$ mit einem Signal $x_2$ der Länge $P$, d.h. $x_2[n] = 0$ für $n < 0$ und $n > P-1$ falten. (\textbf{lineare Faltung}) Es gibt jedoch schnelle Algorithmen zur Berechnung der zyklischen Faltung, indem man über die FFT die zu faltenden Signale in den Frequenzbereich transformiert, diese elementweise multiplizieren und das erhaltene Signal rückttransformieren via IFFT. Deswegen versuchen wir jetzt einen Weg zu finden, wie wir die lineare Faltung über eine zyklische Faltung berechnen können.
 
 \subsection*{Lineare Faltung}
 \vspace*{-0.5cm}
+Wir betrachten $x_1[n]$ der Länge $L$ und $x_2[n]$ der Länge $P$ und wollen folgende Faltung berechnen:
+$$ x_3[n] = \sum_{l=-\infty}^\infty x_1[l]\cdot x_2[n-l] = \sum_{l=-0}^{L-1} x_1[l]\cdot x_2[n-l] $$
+Da $x_2$ Länge $P$ hat, muss $n-l \in \{ 0, \; 1, \; \dots, \; P-1 \}$, liegen, damit der $x_2$-Term nicht null ist. Das ist äquivalent zu den Bedingungen:
+$$ n \in \{l, \; l+1, \; \dots , \; l+P-1\} \text{ für } l \in \{ 0, \; \dots, \; L-1 \} \Leftrightarrow n \in \{0, \; 1, \; \dots, \; L+P-2\}$$
+Somit hat das Ergebnis der Faltung Länge $L+P-1$. Wenn wir diese Faltung nun mit zyklischer Faltung berechnen wollen, müssen wir die Periodendauer $N$ so wählen, dass $N \geq P + L -1$. Dann überlappen sich die $N-$periodisch fortgesetzten Kopien der Faltung nicht und somit haben wir dann \textbf{kein Aliasing}.
 
-kochrezept etc
+Somit haben wir ein $N$ gefunden, mit dem wir die Faltung von $x_1$ mit $x_2$ ohne Aliasing berechnen können. Für die Berechnung müssen wir die Signale $x_1$ und $x_2$ mit Nullen auffüllen, bis sie Länge $N$ haben. Diesen Schritt nennt man \textbf{Zero-Padding}.
+
+Im nächsten Schritt kann man die $N-$Punkt DFTs für $x_1[n]$ und $x_2[n]$ berechnen (bsp. mittels FFT). \textcolor{myred}{Achtung: Die N-Punkt DFTs der Signale sind nicht gleich der L- und P-Punkt DFTs!}
+
+Die Fouriertransformierten Signale $\hat{x}_1[k]$ und $\hat{x}_2[k]$ kann man punktweise Multiplizieren, da eine Faltung im Zeitbereich einer Multiplikation im Frequenzbereich entspricht. Wenn wir $\hat{x}_3[k] = \hat{x}_1[k] \cdot \hat{x}_2[k]$ zurücktransformieren, dann erhalten wir $\tilde{x}_3[n]$, was der periodischen Fortsetzung von $x_3[n]$ entspricht. Um $x_3[n]$ zu erhalten, können wir einfach einfach die periodischen Fortsetzungen von $\tilde{x}_3[n]$ abschneiden. Da wir $N$ zuvor korrekt gewählt haben, können wir sicher sein, dass wir kein Aliasing haben und wir somit tatsächlich $x_3 = x_1 \ast x_2$ erhalten.
+
+\vspace*{0.5cm}
+\noindent
+\begin{minipage}{0.45\textwidth}
+    \includegraphics[width=\linewidth]{docimgs/conv_alias.png}
+    \vspace*{-0.25cm}
+    \begin{itemize}[leftmargin=0pt]
+        \item[] $h[n] = 0$ für $n <0$ und $n> 10 = L-1$
+        \item[] $x[n] = 0$ für $n <0$ und $n> 125 = P-1 $
+        \item[] $\implies L = 11$ und $P = 126$
+        \item[] Wir haben hier $N=128 < P + L - 1= 136$ gewählt.
+        \item[] $\implies$ Wir haben Aliasing und können die lineare Faltung nicht aus der zyklischen Faltung berechnen.
+    \end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+    \includegraphics[width=\linewidth]{docimgs/conv_no_alias.png}
+    \vspace*{-0.25cm}
+    \begin{itemize}[leftmargin=0pt]
+        \item[] Hier haben wir $h[n]$ und $x[n]$ auf $N=136$ mit Nullen aufgefüllt. (Zero-Padding). 
+        \item[] Wir beobachten, dass wir somit die lineare Faltung mittels zyklischer Faltung berechnen können, da wir kein Aliasing haben.
+    \end{itemize}
+    \vspace*{2.15cm}
+\end{minipage}
+
+\pagebreak
+
+\textbf{Zusammengefasstes Kochrezept}:
+\vspace*{-0.5cm}
+\begin{enumerate}
+    \item Zero-Padding (mit Nullen auffüllen) der Signale $x_1[n]$ und $x_2[n]$ auf die Länge $N \geq P + L - 1$
+    \item Berechnen der \textcolor{myred}{N-Punkte} DFT $\hat{x}_1[k]$ und $\hat{x}_2[k]$
+    \item Berechnen des punktweisen Produktes $\hat{x}_3[k] = \hat{x}_1[k] \cdot  \hat{x}_2[k]$
+    \item Inverse N-Punkte DFT von $\hat{x}_3[k]$
+    \item[] Wir erhalten $\tilde{x}_3[n]$, die periodische Fortsetzung von $x_3[n]$
+\end{enumerate}
 
 Jetzt haben wir einen Weg gesehen, wie wir eine lineare Faltung durch eine zyklischen Faltung berechnen können mithilfe der DFT. Nun schauen wir uns die zyklische Faltung nochmals etwas genauer an, um ihre Anwendungen auf LTI-Systeme etwas genauer zu untersuchen.
 
@@ -313,7 +390,7 @@ Jetzt haben wir einen Weg gesehen, wie wir eine lineare Faltung durch eine zykli
 Wir beginnen wieder bei:
 $$x_3[l] = \sum_{n=0}^{N-1} x_1[n]x_2[l-n] = \sum_{n=0}^{N-1} x_1[l-n] x_2[n]$$
 Dieser Ausdruck sieht in Matrixdarstellung wie folgt aus:
-
+\vspace*{-0.1cm}
 \begin{align*}
     \underbrace{\begin{bmatrix}
         x_3[0] \\
@@ -345,20 +422,26 @@ Dieser Ausdruck sieht in Matrixdarstellung wie folgt aus:
 \end{align*}
 Wobei wir in ($\star$) die N-Periodizität des Signales $\mathbf{x}_2$ angewandt haben.
 
-$\mathbf{X}_2$ ist eine \textbf{zirkulante Matrix}. Eine zirkulante Matrix ist durch den (einen) Vektor $\mathbf{x}_2[n]$ vollständig bestimmt.
-
-Wir berechnen nun:
+$\mathbf{X}_2$ ist eine \textbf{zirkulante Matrix}. Eine zirkulante Matrix ist durch den (einen) Vektor $\mathbf{x}_2[n]$ vollständig bestimmt. Wir berechnen nun:
 
 \begin{align*}
     \frac{1}{N}\mathbf{F}_N \mathbf{X}_2 \mathbf{F}_N^H &= \frac{1}{N} \begin{bmatrix}
-        ...
+        \hat{x}_2[0] & \hat{x}_2[0] & \cdots & \hat{x}_2[0] \\
+        \hat{x}_2[1] & \hat{x}_2[1]\omega_N & \cdots & \hat{x}_2[1]\omega_N^{N-1} \\
+        \hat{x}_2[2] & \hat{x}_2[2]\omega_N^2 & \cdots & \hat{x}_2[2]\omega_N^{2(N-1)} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        \hat{x}_2[N-1] & \hat{x}_2[N-1]\omega_N^{N-1} & \cdots & \hat{x}_2[N-1]\omega_N^{(N-1)^2}
     \end{bmatrix} \mathbf{F}_N^H \\
     &= \frac{1}{N} \begin{bmatrix}
         \hat{x}_2[0] & & \mathbf{0} \\
         & \ddots & \\
         \mathbf{0} & & \hat{x}_2[N-1]
     \end{bmatrix} \underbrace{\begin{bmatrix}
-        ...
+        1 & 1 & 1 & \cdots & 1 \\
+        1 & \omega_N & \omega_N^2 & \cdots & \omega_N^{N-1} \\
+        1 & \omega_N^2 & \omega_N^4 & \cdots & \omega_N^{2(N-1)} \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        1 & \omega_N^{N-1} & \omega_N^{2(N-1)} & \cdots & \omega_N^{(N-1)^2}
     \end{bmatrix}}_{\mathbf{F}_N} \mathbf{F}_N^H \\
     &= \frac{1}{N} \begin{bmatrix}
         \hat{x}_2[0] & & \mathbf{0} \\
@@ -380,9 +463,9 @@ Wir berechnen nun:
 
 \begin{enumerate}
     \item Die Eigenvektoren einer zirkulanten Matrix sind die Spalten der normalisierten DFT-Matrix $\frac{1}{\sqrt{N}}\mathbf{F}_N^H$ und die dazugehörigen Eigenwerte sind die DFT der ersten Spalte der zirkulanten Matrix gegeben. 
-    \item Dies entspricht im zeitkontinuierlichen Fal der Eigenschaft, dass die
+    \item Dies entspricht im zeitkontinuierlichen Fall der Eigenschaft, dass die
     Funktionen $e^{2 \pi i f_0 t}$ Eigenfunktionen von LTI-Systemen sind und $\hat{h}(f)$ die dazugehörigen Eigenwerte. Anstelle von $e^{2 \pi i f_0 t}$ haben wir hier die Spalten von $\frac{1}{\sqrt{N}}\mathbf{F}_N^H$ und anstelle von $\hat{h}(f)$ die Werte $\hat{h}[k]$.
-    \item Die Faltung wird durch die DFT diagonalisiert.
+    \item \textbf{Die zyklische Faltung wird durch die DFT diagonalisiert}.
 \end{enumerate}
 
 
@@ -391,12 +474,14 @@ Wir berechnen nun:
 
 Wir wenden nun obige Berechnungen auf LTI-Systeme an. Falls $\mathbf{x}_1 = \mathbf{x}$ das Eingangssignal, $\mathbf{x}_2 = \mathbf{h}$ die Impulsantwort und $\mathbf{x}_3 = \mathbf{y}$ das Ausgangssignal ist, dann erhalten wir:
 
-$$\mathbf{y} = \mathbf{H}\mathbf{x} =  \frac{1}{N} \mathbf{F}_N^H  \begin{bmatrix}
+\pagebreak
+
+$$\vspace*{-0.75cm}\mathbf{y} = \mathbf{H}\mathbf{x} =  \frac{1}{N} \mathbf{F}_N^H  \begin{bmatrix}
     \hat{h}[0] & & \mathbf{0} \\
     & \ddots & \\
     \mathbf{0} & & \hat{h}[N-1]
 \end{bmatrix} \mathbf{F}_N \mathbf{x}$$
-$$\verticaltransform{\text{DFT}}{1}{}{} \hspace{7.5cm}$$
+$$\vspace*{-1cm}\verticaltransform{\text{DFT}}{1}{}{} \hspace{7.5cm}$$
 $$\mathbf{F}_N \mathbf{y} = \underbrace{\frac{1}{N} \mathbf{F}_N \mathbf{F}_N^H}_{\mathbf{I}_N}  \begin{bmatrix}
     \hat{h}[0] & & \mathbf{0} \\
     & \ddots & \\
@@ -408,10 +493,11 @@ $$\mathbf{F}_N \mathbf{y} = \underbrace{\frac{1}{N} \mathbf{F}_N \mathbf{F}_N^H}
     \hat{h}[N-1] \hat{x}[N-1]
 \end{bmatrix}$$
 
-(Faltung Zeitbereich -> Multiplikation Frequenzbereich)
+\vspace*{-0.5cm}
+Das heisst, wie auch schon im zeitkontinuierlichen Bereich entspricht die \textbf{Faltung im Zeitbereich einer Multiplikation Frequenzbereich}.
 
 Wie bereits im zeitkontinuierlichen Fall kommutieren auch im (endlichen) zeitdiskreten Fall zwei LTI-Systeme mit Impulsantworten $\mathbf{h}_1$ und $\mathbf{h}_2$.
-
+\vspace*{-0.25cm}
 \begin{align*}
     \mathbf{H}_1 \mathbf{H}_2 &= \frac{1}{N} \mathbf{F}_N^H \begin{bmatrix}
         \hat{h}_1[0] & & \mathbf{0} \\
@@ -440,7 +526,32 @@ Wie bereits im zeitkontinuierlichen Fall kommutieren auch im (endlichen) zeitdis
 \end{align*}
 
 
-\subsection*{Alte Prüfungsaufgabe}
+\subsection*{Prüfungsaufgabe: Sommer 2020, Aufgabe 3.a) und b)}
 \vspace*{-0.5cm}
+\begin{itemize}
+    \item[$\star$ (a)] (10 Punkte) Es sei $x[n]$, $n=0, \; \dots, \; N-1$ ein zeitdiskretes Signal der Länge $N$. Des Weiteren definieren wir das zeitdiskrete Signal $y[n]$ der Länge $2N$ gemäss
+    $$ y[n] = \begin{cases}
+        x[n], \hspace{1.5cm} n = 0, \; \dots, \; N-1 \\
+        x[n-N], \hspace{0.5cm} n = N, \; \dots, \; 2N-1.
+    \end{cases} $$
+    Finden Sie einen Ausdruck für die $2N-$Punkt DFT $\hat{y}[k]$ von $y[n]$ als Funktion der $N-$Punkt DFT $\hat{x}[k]$ von $x[n]$.
+    \item[$\star$ (b)] (8 Punkte) Ein Signal  $x[n]$, $n=0, \; \dots, \; N-1$ wird als $N-$\textit{Punkt zirkulant gerade} bezeichnet, wenn $x[N-n] = x[n], \hspace{0.5cm} \text{für } n= 0, \, \dots, \; N-1$ gilt. (Beachten Sie, dass $x[N] = x[0]$.) Beweisen Sie, dass die $N-$Punkt DFT $\hat{x}[k]$ des $N-$Punkt zirkulant geraden Signals $x[n]$ ebenfalls $N-$Punkt zirkulant gerade ist.
+\end{itemize}
+
+\pagebreak
+
+\begin{tikzpicture}
+    % Define the box size and grid spacing
+    \draw[step=0.5cm,gray!50,very thin] (0,0) grid (16.5,21
+    ); % (0,0) is bottom-left corner, (10,10) is top-right corner
+\end{tikzpicture}
+
+\pagebreak
+
+\begin{tikzpicture}
+    % Define the box size and grid spacing
+    \draw[step=0.5cm,gray!50,very thin] (0,0) grid (16.5,21
+    ); % (0,0) is bottom-left corner, (10,10) is top-right corner
+\end{tikzpicture}
 
 \end{document}
