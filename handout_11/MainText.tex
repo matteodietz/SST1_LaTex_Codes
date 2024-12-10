@@ -379,7 +379,9 @@ Wir berechnen nun:
 \subsubsection*{Bemerkungen}
 
 \begin{enumerate}
-    \item Die Eigenvektoren einer zirkulanten Matrix sind die Spalten der normalisierten DFT-Matrix $\frac{1}{\sqrt{N}}\mathbf{F}_N^H$ und die dazugehörigen Eigenwerte sind die DFT der ersten Spalte der zirkulanten Matrix gegeben. Im zeitkontinuierlichen Fall ...
+    \item Die Eigenvektoren einer zirkulanten Matrix sind die Spalten der normalisierten DFT-Matrix $\frac{1}{\sqrt{N}}\mathbf{F}_N^H$ und die dazugehörigen Eigenwerte sind die DFT der ersten Spalte der zirkulanten Matrix gegeben. 
+    \item Dies entspricht im zeitkontinuierlichen Fal der Eigenschaft, dass die
+    Funktionen $e^{2 \pi i f_0 t}$ Eigenfunktionen von LTI-Systemen sind und $\hat{h}(f)$ die dazugehörigen Eigenwerte. Anstelle von $e^{2 \pi i f_0 t}$ haben wir hier die Spalten von $\frac{1}{\sqrt{N}}\mathbf{F}_N^H$ und anstelle von $\hat{h}(f)$ die Werte $\hat{h}[k]$.
     \item Die Faltung wird durch die DFT diagonalisiert.
 \end{enumerate}
 
@@ -387,7 +389,26 @@ Wir berechnen nun:
 \subsection*{Anwendung der DFT auf LTI-Systeme}
 \vspace*{-0.5cm}
 
-Falls $x_2 = h$ ..., dann (Faltung Zeitbereich -> Multiplikation Frequenzbereich)
+Wir wenden nun obige Berechnungen auf LTI-Systeme an. Falls $\mathbf{x}_1 = \mathbf{x}$ das Eingangssignal, $\mathbf{x}_2 = \mathbf{h}$ die Impulsantwort und $\mathbf{x}_3 = \mathbf{y}$ das Ausgangssignal ist, dann erhalten wir:
+
+$$\mathbf{y} = \mathbf{H}\mathbf{x} =  \frac{1}{N} \mathbf{F}_N^H  \begin{bmatrix}
+    \hat{h}[0] & & \mathbf{0} \\
+    & \ddots & \\
+    \mathbf{0} & & \hat{h}[N-1]
+\end{bmatrix} \mathbf{F}_N \mathbf{x}$$
+$$\verticaltransform{\text{DFT}}{1}{}{} \hspace{7.5cm}$$
+$$\mathbf{F}_N \mathbf{y} = \underbrace{\frac{1}{N} \mathbf{F}_N \mathbf{F}_N^H}_{\mathbf{I}_N}  \begin{bmatrix}
+    \hat{h}[0] & & \mathbf{0} \\
+    & \ddots & \\
+    \mathbf{0} & & \hat{h}[N-1]
+\end{bmatrix} \hat{\mathbf{x}} = \begin{bmatrix}
+    \hat{h}[0] \hat{x}[0] \\
+    \hat{h}[1] \hat{x}[1] \\
+    \vdots \\
+    \hat{h}[N-1] \hat{x}[N-1]
+\end{bmatrix}$$
+
+(Faltung Zeitbereich -> Multiplikation Frequenzbereich)
 
 Wie bereits im zeitkontinuierlichen Fall kommutieren auch im (endlichen) zeitdiskreten Fall zwei LTI-Systeme mit Impulsantworten $\mathbf{h}_1$ und $\mathbf{h}_2$.
 
