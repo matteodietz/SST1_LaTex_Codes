@@ -9,3 +9,5 @@
 *.lot
 *.gz
 .DS_Store
+*.snm
+*.nav
