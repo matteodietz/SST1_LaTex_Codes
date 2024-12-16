@@ -235,19 +235,17 @@ Es gilt $F_N F_N^H = N I_N$, wobei $I_N$ die Identitätsmatrix der Dimension $N$
     $$\hat{x}_3[k] = \hat{x}_1[k] \cdot \hat{x}_2[k]$$
 }}%
 
-
-\pagebreak
-
 \subsection*{Diskrete Filter}
 
+\pagebreak
 
 Wir haben gesehen, dass die DFT eines zeitdiskreten Signals der Länge $N$ einer Abtastung von $\hat{x}(\theta)$ entspricht, wobei die Abtastfrequenz $\frac{1}{N}$ ist.
 $$\hat{x}[k] = \left.\hat{x}(\theta)\right|_{\theta = \frac{k}{N}}, \hspace{20pt} k = 0, \; 1, \; \dots, \; N-1$$
 
-Das entspricht der \textcolor{red}{kritischen Abtastung} ($N \times N$ Matrix), aber was passiert bei Über-/Unterabtastung?
+Das entspricht der \textcolor{red}{kritischen Abtastung} ($N \times N$ Matrix). Was passiert, wenn wir nicht mit Frequenz $\frac{1}{N}$ sondern mit $\frac{1}{M}$, wobei $M > N$ (Überabtastung) oder $M < N$ (Unterabtastung) sein kann.
 
-\subsection*{Überabtastung ($M > N$)}
-\vspace*{-0.5cm}
+Die DFT-Formel sieht in diesen Fällen wie folgt aus:
+\vspace*{-0.25cm}
 $$\hat{x}\left(\frac{k}{M}\right) = \sum_{n=0}^{N-1}x[n]e^{-2 \pi i k \frac{n}{M}}, \hspace*{20pt} k = 0, \; 1, \; \dots, \; M-1$$
 In Matrixform sieht das wie folgt aus:
 $$\hat{\mathbf{x}} = \underbrace{\begin{bmatrix}
@@ -255,19 +253,30 @@ $$\hat{\mathbf{x}} = \underbrace{\begin{bmatrix}
     1 & \omega_M & \omega_M^2 & \cdots & \omega_M^{N-1} \\
     \vdots & \vdots & \vdots & \ddots & \vdots \\
     1 & \omega_M^{M-1} & \omega_M^{2(M-1)} & \cdots & \omega_M^{(N-1)(M-1)}
-\end{bmatrix}}_{\text{Matrix }F_0} \mathbf{x} \hspace{20pt} \omega_M = e^{-\frac{2 \pi i}{M}}$$
+\end{bmatrix}}_{\text{Matrix }F} \mathbf{x} \hspace{20pt} \omega_M = e^{-\frac{2 \pi i}{M}}$$
 
+\vspace*{-0.25cm}
+\subsection*{Überabtastung ($M > N$)}
+\vspace*{-0.5cm}
 \begin{itemize}
     \item $\mathbf{x} \in \mathbb{C}^{N \times 1}$ (Länge $N$) und $\hat{\mathbf{x}} \in \mathbb{C}^{M \times 1}$ (Länge $M$)
-    \item $F_0 \in \mathbb{C}^{M\times N}$, ($M > N$) hat mehr Zeilen als Spalten
+    \item $F_o \in \mathbb{C}^{M\times N}$, ($M > N$) hat mehr Zeilen als Spalten. Das Subscript o steht für oversampling.
     \item Aus $\hat{\mathbf{x}}$ (DFT-Vektor) können wir mithilfe einer Pseudoinversen $\mathbf{x}$ zurückgewinnen.
-    \item Für die Rücktransformation gilt: $\mathbf{x} = \displaystyle\frac{1}{M} F_0^H \hat{\mathbf{x}}$, was folgendem Ausdruck entspricht:
+    \item Für die Rücktransformation gilt: $\mathbf{x} = \displaystyle\frac{1}{M} F_o^H \hat{\mathbf{x}}$, was folgendem Ausdruck entspricht:
 \end{itemize}
+\vspace*{-0.5cm}
 $$x[n] = \frac{1}{M} \sum_{k=0}^{M-1} \hat{x}[k]\omega_M^{-kn}, \hspace{20pt} n = 0, \; 1, \; \dots, \; N-1$$
 
-
+\vspace*{-0.25cm}
 \subsection*{Unterabtastung ($M < N$)}
 \vspace*{-0.5cm}
+\begin{itemize}
+    \item $\mathbf{x} \in \mathbb{C}^{N \times 1}$ (Länge $N$) und $\hat{\mathbf{x}} \in \mathbb{C}^{M \times 1}$ (Länge $M$)
+    \item $F_u \in \mathbb{C}^{M\times N}$, ($M > N$) hat mehr Spalten als Zeilen. Das Subscript u steht für undersampling.
+    \item Das Gleichungssystem $\hat{\mathbf{x}} = F_u \mathbf{x}$ ist unterbestimmt, i.e. wir haben $M$ Gleichungen und $N$ Unbekannte, wobei $M < N$.
+    \item[] $\implies \mathbf{x}$ kann \textcolor{red}{nicht} aus $\mathbf{x}$ zurückgewonnen werden.
+\end{itemize}
+
 
 \vfill \null
 \pagebreak
@@ -340,8 +349,18 @@ Es folgt $\hat{x}[k] = \hat{g}[k] + \omega_N^k \hat{u}[k], \hspace{12pt} k = 0, 
 
 $$\hat{g}[k] = \hat{g}\left[k + \frac{N}{2}\right] \hspace*{30pt} \hat{u}[k] = \hat{u}\left[k + \frac{N}{2}\right]$$
 
+\subsection*{Prüfungsaufgabe: Sommer 2021, Aufgabe 3}
+\vspace*{-0.5cm}
+\includegraphics[width=\linewidth]{docimgs/Sommer21_3.png}
 
-\vfill \null
+\pagebreak
+
+\begin{tikzpicture}
+    % Define the box size and grid spacing
+    \draw[step=0.5cm,gray!50,very thin] (0,0) grid (16.5,21
+    ); % (0,0) is bottom-left corner, (10,10) is top-right corner
+\end{tikzpicture}
+
 \pagebreak
 
 \begin{tikzpicture}
