@@ -240,9 +240,34 @@ Es gilt $F_N F_N^H = N I_N$, wobei $I_N$ die Identitätsmatrix der Dimension $N$
 
 \subsection*{Diskrete Filter}
 
-\subsection*{Überabtastung}
 
-\subsection*{Unterabtastung}
+Wir haben gesehen, dass die DFT eines zeitdiskreten Signals der Länge $N$ einer Abtastung von $\hat{x}(\theta)$ entspricht, wobei die Abtastfrequenz $\frac{1}{N}$ ist.
+$$\hat{x}[k] = \left.\hat{x}(\theta)\right|_{\theta = \frac{k}{N}}, \hspace{20pt} k = 0, \; 1, \; \dots, \; N-1$$
+
+Das entspricht der \textcolor{red}{kritischen Abtastung} ($N \times N$ Matrix), aber was passiert bei Über-/Unterabtastung?
+
+\subsection*{Überabtastung ($M > N$)}
+\vspace*{-0.5cm}
+$$\hat{x}\left(\frac{k}{M}\right) = \sum_{n=0}^{N-1}x[n]e^{-2 \pi i k \frac{n}{M}}, \hspace*{20pt} k = 0, \; 1, \; \dots, \; M-1$$
+In Matrixform sieht das wie folgt aus:
+$$\hat{\mathbf{x}} = \underbrace{\begin{bmatrix}
+    1 & 1 & 1 & \cdots & 1 \\
+    1 & \omega_M & \omega_M^2 & \cdots & \omega_M^{N-1} \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    1 & \omega_M^{M-1} & \omega_M^{2(M-1)} & \cdots & \omega_M^{(N-1)(M-1)}
+\end{bmatrix}}_{\text{Matrix }F_0} \mathbf{x} \hspace{20pt} \omega_M = e^{-\frac{2 \pi i}{M}}$$
+
+\begin{itemize}
+    \item $\mathbf{x} \in \mathbb{C}^{N \times 1}$ (Länge $N$) und $\hat{\mathbf{x}} \in \mathbb{C}^{M \times 1}$ (Länge $M$)
+    \item $F_0 \in \mathbb{C}^{M\times N}$, ($M > N$) hat mehr Zeilen als Spalten
+    \item Aus $\hat{\mathbf{x}}$ (DFT-Vektor) können wir mithilfe einer Pseudoinversen $\mathbf{x}$ zurückgewinnen.
+    \item Für die Rücktransformation gilt: $\mathbf{x} = \displaystyle\frac{1}{M} F_0^H \hat{\mathbf{x}}$, was folgendem Ausdruck entspricht:
+\end{itemize}
+$$x[n] = \frac{1}{M} \sum_{k=0}^{M-1} \hat{x}[k]\omega_M^{-kn}, \hspace{20pt} n = 0, \; 1, \; \dots, \; N-1$$
+
+
+\subsection*{Unterabtastung ($M < N$)}
+\vspace*{-0.5cm}
 
 \vfill \null
 \pagebreak
