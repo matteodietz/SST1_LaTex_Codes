@@ -236,43 +236,171 @@ $$\underbrace{\begin{bmatrix}
 \end{frame}
 
 \begin{frame}{Diskrete Filter}
-    
+    Diskrete ideale Filter haben eine Impulsantwort mit $N-$Punkt DFT:
+$$\hat{h}[k] = \begin{cases}
+    1, \hspace{10pt} k \in \mathcal{D} \text{ (Durchlassbereich)} \\
+    0, \hspace{10pt} \text{sonst}
+\end{cases}$$
+\small{
+\begin{align*}
+    \mathbf{H} &= \frac{1}{N} \mathbf{F}_N^H \begin{bmatrix}
+        \hat{h}[0] & & \mathbf{0} \\
+        & \ddots & \\
+        \mathbf{0} & & \hat{h}[N-1]
+    \end{bmatrix} \mathbf{F}_N \\
+    &= \frac{1}{N} \begin{bmatrix}
+        \mathbf{f}_1 & \cdots & \mathbf{f}_N
+    \end{bmatrix} \begin{bmatrix}
+        \hat{h}[0] & & \mathbf{0} \\
+        & \ddots & \\
+        \mathbf{0} & & \hat{h}[N-1]
+    \end{bmatrix} \begin{bmatrix}
+        \mathbf{f}_1^H \\
+        \vdots \\
+        \mathbf{f}_N^H
+    \end{bmatrix} = \frac{1}{N} \sum_{l \in \mathcal{D}} \mathbf{f}_l \mathbf{f}_l^H
+\end{align*}}
+
 \end{frame}
 
-\begin{frame}{Diskrete Filter: Matrixdarstellung}
-    
+\begin{frame}{Diskrete Filter}
+    Filter auf ein Signal $\mathbf{x}$ angewandt:
+$$\frac{1}{N} \left( \sum_{l \in \mathcal{D}} \mathbf{f}_l \mathbf{f}_l^H \right) \mathbf{x} = \frac{1}{N} \sum_{l \in \mathcal{D}} \langle \mathbf{x}, \; \mathbf{f}_l \rangle \mathbf{f}_l$$
+Filter $\mathbf{H}$ entspricht einer orthogonalen Projektion auf $\mathcal{R}(\mathbf{H})$:
+
+\begin{multicols}{2}
+    \begin{itemize}
+        \item[(i)] $\mathbf{H}^2 = \mathbf{H}$
+        \item[(ii)] $\mathbf{H} = \mathbf{H}^H$
+    \end{itemize}
+\end{multicols}
 \end{frame}
 
-\begin{frame}{DFT: Kritische Abtastung}
-    
+\begin{frame}{DFT: Abtastung}
+    \begin{itemize}
+        \item DFT eines zeitdiskreten Signals der Länge $N$ entspricht Abtastung von $\hat{x}(\theta)$ (DTFT) mit Abtastfrequenz $\frac{1}{N}$
+         $$\hat{x}[k] = \left.\hat{x}(\theta)\right|_{\theta = \frac{k}{N}}, \hspace{20pt} k = 0, \; 1, \; \dots, \; N-1$$
+        \item Das ist \textcolor{red}{kritische Abtastung} ($N \times N$ Matrix)
+        \item[] 
+        \item Was passiert, wenn wir Überabtasten oder Unterabtasten?
+    \end{itemize}
 \end{frame}
 
-\begin{frame}{DFT: Überabtastung}
-    
+\begin{frame}{DFT: Abtastung}
+    Wir tasten nun nicht mit Frequenz $\frac{1}{N}$ sondern mit $\frac{1}{M}$ ab
+
+$$\hat{x}\left(\frac{k}{M}\right) = \sum_{n=0}^{N-1}x[n]e^{-2 \pi i k \frac{n}{M}}, \hspace*{20pt} k = 0, \; 1, \; \dots, \; M-1$$
+In Matrixform:
+$$\hat{\mathbf{x}} = \underbrace{\begin{bmatrix}
+    1 & 1 & 1 & \cdots & 1 \\
+    1 & \omega_M & \omega_M^2 & \cdots & \omega_M^{N-1} \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    1 & \omega_M^{M-1} & \omega_M^{2(M-1)} & \cdots & \omega_M^{(N-1)(M-1)}
+\end{bmatrix}}_{\text{Matrix }F} \mathbf{x} \hspace{30pt} \omega_M = e^{-\frac{2 \pi i}{M}}$$
 \end{frame}
 
-\begin{frame}{DFT: Unterabtastung}
-    
+\begin{frame}{DFT: Überabtastung ($M>N$)}
+    \begin{itemize}
+        \item $\mathbf{x} \in \mathbb{C}^{N \times 1}$ (Länge $N$) und $\hat{\mathbf{x}} \in \mathbb{C}^{M \times 1}$ (Länge $M$)
+        \item[] 
+        \item $F_o \in \mathbb{C}^{M\times N}$, ($M > N$) hat mehr Zeilen als Spalten
+        \item[] 
+        \item Aus $\hat{\mathbf{x}}$ können wir mittels Pseudoinversen $\mathbf{x}$ zurückgewinnen.
+        \item[] 
+        \item Rücktransformation: $\mathbf{x} = \displaystyle\frac{1}{M} F_o^H \hat{\mathbf{x}}$, also:
+    \end{itemize}
+    $$x[n] = \frac{1}{M} \sum_{k=0}^{M-1} \hat{x}[k]\omega_M^{-kn}, \hspace{20pt} n = 0, \; 1, \; \dots, \; N-1$$
 \end{frame}
 
-\begin{frame}{Fast Fourier Transform (FFT)}
-    
+\begin{frame}{DFT: Unterabtastung ($M<N$)}
+    \begin{itemize}
+        \item $\mathbf{x} \in \mathbb{C}^{N \times 1}$ (Länge $N$) und $\hat{\mathbf{x}} \in \mathbb{C}^{M \times 1}$ (Länge $M$)
+        \item[] 
+        \item $F_u \in \mathbb{C}^{M\times N}$, ($M < N$) hat mehr Spalten als Zeilen
+        \item[] 
+        \item Gleichungssystem $\hat{\mathbf{x}} = F_u \mathbf{x}$ ist unterbestimmt: $M$ Gleichungen und $N$ Unbekannte, wobei $M < N$.
+        \item[] $\implies \mathbf{x}$ kann \textcolor{red}{nicht} aus $\hat{\mathbf{x}}$ zurückgewonnen werden.
+    \end{itemize}
 \end{frame}
 
-\begin{frame}{Fast Fourier Transform (FFT)}
-    
+\begin{frame}{Fast Fourier Transform (FFT): Idee}
+    Die DFT ist sehr rechenaufändig:
+
+    $$\hat{x}[k] = \sum_{n=0}^{N-1} x[n]\omega_N^{kn}, \hspace{20pt} k=0, \; 1, \; \dots, \; N-1$$
+
+    Idee: Wir zerlegen das Signal $x[n]$ rekursiv in geraden und ungeraden Anteil bis wir nur noch "Teilsignale" der Länge 2 haben:
+
+    \begin{center}
+        \includegraphics[width=0.5\linewidth]{figures/Rekursionsbaum.jpeg}
+    \end{center}
 \end{frame}
 
-\begin{frame}{FFT: Rekursionsbaum}
-    
+\begin{frame}{Fast Fourier Transform (FFT): Idee}
+    Am Ende haben wir nur noch 2-Punkt DFTs
+    $$F_2 = \begin{bmatrix}
+    1 & 1 \\
+    1 & \omega_2
+\end{bmatrix} = \begin{bmatrix}
+    1 & 1 \\
+    1 & -1
+\end{bmatrix} \implies \begin{array}{l}
+    \hat{x}_r[0] = x_r[0] + x_r[1] \\
+    \hat{x}_r[1] = x_r[0] - x_r[1]
+\end{array}$$
+
+\fcolorbox{darkblue}{lightblue}{%
+\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{
+    \vspace*{0.1cm}
+    \noindent
+    \begin{minipage}[t]{0.45\textwidth}
+        \vspace*{0.1cm}
+        \begin{itemize}
+            \item[] \textbf{DFT} ist in $\mathcal{O}(N^2)$
+        \end{itemize}
+        \vspace*{-0.1cm}
+    \end{minipage}%
+    \hfill%
+    \begin{minipage}[t]{0.45\textwidth}
+        \vspace*{0.1cm}
+        \begin{itemize}
+            \item[] \textbf{FFT} ist in $\mathcal{O}(N\log(N))$
+        \end{itemize}
+        \vspace*{-0.1cm}
+    \end{minipage}
+}%
+}
 \end{frame}
 
 \begin{frame}{FFT: Cooley-Tukey Algorithmus}
-    
+    \begin{itemize}
+        \item \textbf{Annahme}: $N$ gerade, sodass $\frac{N}{2} \in \mathbb{N}$
+        \item Wir versuchen die $N-$Punkt DFT als zwei $\frac{N}{2}-$Punkt DFTs (geraden und ungeraden Anteil) zu schreiben:
+        \item[]
+        \item[]
+        \item[]
+        \item[]
+        \item[]
+        \item[]
+        \item[]
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{FFT: Cooley-Tukey Algorithmus}
-    
+    \textbf{Kunstgriff}: $\omega_N^2 = e^{-\frac{4 \pi i}{N}} = e^{-\frac{2 \pi i}{(N/2)}} = \omega_{\frac{N}{2}}$
+
+\vspace*{0.5cm}
+\fcolorbox{darkblue}{lightblue}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{
+        \vspace*{0.1cm}
+        $$\implies \underbrace{\sum_{l=0}^{\frac{N}{2}-1}x[2l]\omega_{\frac{N}{2}}^{kl}}_{=: \hat{g}[k]} + \omega_N^k \underbrace{\sum_{l=0}^{\frac{N}{2}-1} x[2l+1] \omega_{\frac{N}{2}}^{kl}}_{=: \hat{u}[k]}$$
+    }%
+}
+
+\vspace*{0.5cm}
+$\implies \hat{x}[k] = \hat{g}[k] + \omega_N^k \hat{u}[k], \hspace{12pt} k = 0, \; 1, \; \dots, \; N-1$ wobei:
+
+\vspace*{-0.15cm}
+$$\hat{g}[k] = \hat{g}\left[k + \frac{N}{2}\right] \hspace*{30pt} \hat{u}[k] = \hat{u}\left[k + \frac{N}{2}\right]$$
 \end{frame}
 
 \begin{frame}{Prüfungsaufgabe: Sommer 2021, Aufgabe 3}
