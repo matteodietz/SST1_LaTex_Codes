@@ -171,7 +171,7 @@ Die DFT ist \textcolor{myred}{sehr wichtig}! Es kommt immer eine ganze Aufgabe d
     \includegraphics[width=0.8\linewidth]{docimgs/DFT_visuals.jpeg}
 \end{center}
 
-\vspace*{-0.5cm}
+\vspace*{-1.5cm}
 \subsection*{Matrixdarstellung}
 \vspace*{-0.5cm}
 Wir haben $\hat{x}[k] = \displaystyle\sum_{n=0}^{N-1} x[n]\omega_N^{kn}, \hspace{20pt} k \in \{ 0, \; 1, \; \dots, \; N-1 \}$ Somit:
@@ -235,6 +235,32 @@ Es gilt $F_N F_N^H = N I_N$, wobei $I_N$ die Identitätsmatrix der Dimension $N$
     $$\hat{x}_3[k] = \hat{x}_1[k] \cdot \hat{x}_2[k]$$
 }}%
 
+In Matrixform sieht die zyklische Faltung wie folgt aus:
+$$\underbrace{\begin{bmatrix}
+    x_3[0] \\
+    x_3[1] \\
+    \vdots \\
+    x_3[N-1]
+\end{bmatrix}}_{\mathbf{x}_3} = \underbrace{\begin{bmatrix}
+    x_2[0] & x_2[N-1] & \cdots & x_2[1] \\
+    x_2[1] & x_2[0] & \cdots & x_2[2] \\
+    \vdots & \vdots & \ddots & \vdots \\
+    x_2[N-1] & x_2[N-2] & \cdots & x_2[0]
+\end{bmatrix}}_{\mathbf{X}_2} \underbrace{\begin{bmatrix}
+    x_1[0] \\
+    x_1[1] \\
+    \vdots \\
+    x_1[N-1]
+\end{bmatrix}}_{\mathbf{x}_1}$$
+
+\vspace*{-0.5cm}
+Die zyklische Faltung wird durch die DFT-Matrix diagonalisiert:
+$$\mathbf{X}_2 = \frac{1}{N} \mathbf{F}_N^H  \begin{bmatrix}
+    \hat{x}_2[0] & & \mathbf{0} \\
+    & \ddots & \\
+    \mathbf{0} & & \hat{x}_2[N-1]
+\end{bmatrix}   \mathbf{F}_N $$
+
 \subsection*{Diskrete Filter}
 
 \pagebreak
@@ -261,7 +287,7 @@ $$\hat{\mathbf{x}} = \underbrace{\begin{bmatrix}
 \begin{itemize}
     \item $\mathbf{x} \in \mathbb{C}^{N \times 1}$ (Länge $N$) und $\hat{\mathbf{x}} \in \mathbb{C}^{M \times 1}$ (Länge $M$)
     \item $F_o \in \mathbb{C}^{M\times N}$, ($M > N$) hat mehr Zeilen als Spalten. Das Subscript o steht für oversampling.
-    \item Aus $\hat{\mathbf{x}}$ (DFT-Vektor) können wir mithilfe einer Pseudoinversen $\mathbf{x}$ zurückgewinnen.
+    \item Aus $\hat{\mathbf{x}}$ (DFT-Vektor) können wir mithilfe einer Pseudoinversen $\mathbf{x}$ zurückgewinnen. Es gibt jedoch unendlich viele solche Inversen. (z.B. Moore-Penrose Pseudo-Inverse)
     \item Für die Rücktransformation gilt: $\mathbf{x} = \displaystyle\frac{1}{M} F_o^H \hat{\mathbf{x}}$, was folgendem Ausdruck entspricht:
 \end{itemize}
 \vspace*{-0.5cm}
