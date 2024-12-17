@@ -375,10 +375,15 @@ Die FFT ist ein Algorithmus, welcher die DFT effizient berechnet. Konkret brauch
 Die DFT ist gegeben durch 
 $$\hat{x}[k] = \sum_{n=0}^{N-1} x[n]\omega_N^{kn}, \hspace{20pt} k=0, \; 1, \; \dots, \; N-1$$
 
+\vspace*{-0.5cm}
 \textbf{Idee}: Wir zerlegen die $N-$Punkt DFT in zwei $\frac{N}{2}-$Punkt DFTs (geraden und ungeraden Anteil) und führen diesen Schritt rekursiv so lange durch, bis wir nur noch $2-$Punkt DFTs haben. Dafür nehmen wir an, dass unser Signal Länge $N=2^n, \; n \in \mathbb{N}$ hat.
 
-\textcolor{red}{figure Rekursionsbaum}
+\vspace*{-0.75cm}
+\begin{center}
+    \includegraphics[width=0.5\linewidth]{docimgs/Rekursionsbaum.jpeg}
+\end{center}
 
+\vspace*{-0.5cm}
 Am Ende haben wir nur noch $2-$Punkte DFTs:
 $$F_2 = \begin{bmatrix}
     1 & 1 \\
@@ -391,18 +396,22 @@ $$F_2 = \begin{bmatrix}
     \hat{x}_r[1] = x_r[0] - x_r[1]
 \end{array}$$
 
+\vspace*{-0.5cm}
 \subsection*{FFT-Algorithmus von Cooley-Tukey}
 \vspace*{-0.5cm}
 Wir versuchen die $N-$Punkt DFT als zwei $\frac{N}{2}-$Punkt DFTs (geraden und ungeraden Anteil) zu schreiben. (Annahme: $N$ gerade, s.d. $\frac{N}{2} \in \mathbb{N}$ ist):
 
+\vspace*{-0.5cm}
 \begin{align*}
     \hat{x}[k] &= \sum_{n=0}^{N-1} x[n]\omega_N^{kn} = \sum_{n\text{ even}} x[n]\omega_N^{kn} + \sum_{n\text{ odd}} x[n]\omega_N^{kn} \\
     &= \sum_{l=0}^{\frac{N}{2}-1} x[2l]\omega_N^{k\cdot 2l} + \sum_{l=0}^{\frac{N}{2}-1} x[2l+1]\omega_N^{k(2l+1)} \\
     &= \sum_{l=0}^{\frac{N}{2}-1}x[2l]\left(\omega_N^2\right)^{kl} + \omega_N^k \sum_{l=0}^{\frac{N}{2}-1} x[2l+1] \left(\omega_N^2\right)^{kl}
 \end{align*}
 
+\vspace*{-0.5cm}
 \textbf{Kunstgriff}: $\omega_N^2 = e^{-\frac{4 \pi i}{N}} = e^{-\frac{2 \pi i}{(N/2)}} = \omega_{\frac{N}{2}}$
 
+\vspace*{-0.25cm}
 \fcolorbox{darkblue}{lightblue}{%
     \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{
         \vspace*{0.1cm}
@@ -412,11 +421,12 @@ Wir versuchen die $N-$Punkt DFT als zwei $\frac{N}{2}-$Punkt DFTs (geraden und u
 
 Es folgt $\hat{x}[k] = \hat{g}[k] + \omega_N^k \hat{u}[k], \hspace{12pt} k = 0, \; 1, \; \dots, \; N-1$ wobei $\hat{g}[k]$ und $\hat{u}[k]$ $\frac{N}{2}-$Punkt DFTs sind, d.h.
 
+\vspace*{-0.75cm}
 $$\hat{g}[k] = \hat{g}\left[k + \frac{N}{2}\right] \hspace*{30pt} \hat{u}[k] = \hat{u}\left[k + \frac{N}{2}\right]$$
 
 \subsection*{Prüfungsaufgabe: Sommer 2021, Aufgabe 3}
 \vspace*{-0.5cm}
-\includegraphics[width=\linewidth]{docimgs/Sommer21_3.png}
+\includegraphics[width=0.95\linewidth]{docimgs/Sommer21_3.png}
 
 \pagebreak
 
