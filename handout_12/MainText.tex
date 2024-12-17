@@ -225,6 +225,12 @@ Die Spalten von $F_N$ sind orthogonal aufeinander. Sei $\mathbf{f}_i$ die $i-$te
 
 Es gilt $F_N F_N^H = N I_N$, wobei $I_N$ die Identitätsmatrix der Dimension $N$ ist.
 
+\subsection*{DFT: Formelsammlung}
+\vspace*{-0.5cm}
+\begin{center}
+    \includegraphics[width=0.8\linewidth]{docimgs/DFT.png}
+\end{center}
+
 \subsection*{Zyklische Faltung}
 \vspace*{-0.5cm}
 \fcolorbox{darkblue}{lightblue}{%
@@ -261,7 +267,40 @@ $$\mathbf{X}_2 = \frac{1}{N} \mathbf{F}_N^H  \begin{bmatrix}
     \mathbf{0} & & \hat{x}_2[N-1]
 \end{bmatrix}   \mathbf{F}_N $$
 
+\vspace*{-0.75cm}
 \subsection*{Diskrete Filter}
+\vspace*{-0.5cm}
+Diskrete ideale Filter haben eine Impulsantwort mit folgender $N-$Punkt DFT:
+$$\hat{h}[k] = \begin{cases}
+    1, \hspace{10pt} k \in \mathcal{D} \text{ (Durchlassbereich)} \\
+    0, \hspace{10pt} \text{sonst}
+\end{cases}$$
+$$\mathbf{H} = \frac{1}{N} \mathbf{F}_N^H \begin{bmatrix}
+    \hat{h}[0] & & \mathbf{0} \\
+    & \ddots & \\
+    \mathbf{0} & & \hat{h}[N-1]
+\end{bmatrix} \mathbf{F}_N = \frac{1}{N} \begin{bmatrix}
+    \mathbf{f}_1 & \cdots & \mathbf{f}_N
+\end{bmatrix} \begin{bmatrix}
+    \hat{h}[0] & & \mathbf{0} \\
+    & \ddots & \\
+    \mathbf{0} & & \hat{h}[N-1]
+\end{bmatrix} \begin{bmatrix}
+    \mathbf{f}_1^H \\
+    \vdots \\
+    \mathbf{f}_N^H
+\end{bmatrix} = \frac{1}{N} \sum_{l \in \mathcal{D}} \mathbf{f}_l \mathbf{f}_l^H $$
+\vspace*{-0.25cm}
+Wenn wir den Filter auf ein Signal $\mathbf{x}$ anwenden, sieht das wie folgt aus:
+$$\frac{1}{N} \left( \sum_{l \in \mathcal{D}} \mathbf{f}_l \mathbf{f}_l^H \right) \mathbf{x} = \frac{1}{N} \sum_{l \in \mathcal{D}} \langle \mathbf{x}, \; \mathbf{f}_l \rangle \mathbf{f}_l$$
+Das Filter $\mathbf{H}$ entspricht einer orthogonalen Projektion auf $\mathcal{R}(\mathbf{H})$, das heisst:
+\vspace*{-0.4cm}
+\begin{multicols}{2}
+    \begin{itemize}
+        \item[(i)] $\mathbf{H}^2 = \mathbf{H}$
+        \item[(ii)] $\mathbf{H} = \mathbf{H}^H$
+    \end{itemize}
+\end{multicols}
 
 \pagebreak
 
