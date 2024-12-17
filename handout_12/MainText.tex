@@ -307,7 +307,7 @@ Das Filter $\mathbf{H}$ entspricht einer orthogonalen Projektion auf $\mathcal{R
 Wir haben gesehen, dass die DFT eines zeitdiskreten Signals der Länge $N$ einer Abtastung von $\hat{x}(\theta)$ entspricht, wobei die Abtastfrequenz $\frac{1}{N}$ ist.
 $$\hat{x}[k] = \left.\hat{x}(\theta)\right|_{\theta = \frac{k}{N}}, \hspace{20pt} k = 0, \; 1, \; \dots, \; N-1$$
 
-Das entspricht der \textcolor{red}{kritischen Abtastung} ($N \times N$ Matrix). Was passiert, wenn wir nicht mit Frequenz $\frac{1}{N}$ sondern mit $\frac{1}{M}$, wobei $M > N$ (Überabtastung) oder $M < N$ (Unterabtastung) sein kann.
+Das entspricht der \textcolor{red}{kritischen Abtastung} ($N \times N$ Matrix). Was passiert, wenn wir nicht mit Frequenz $\frac{1}{N}$ sondern mit $\frac{1}{M}$ abtasten? Also $M > N$ (Überabtastung) oder $M < N$ (Unterabtastung)
 
 Die DFT-Formel sieht in diesen Fällen wie folgt aus:
 \vspace*{-0.25cm}
@@ -337,9 +337,9 @@ $$x[n] = \frac{1}{M} \sum_{k=0}^{M-1} \hat{x}[k]\omega_M^{-kn}, \hspace{20pt} n 
 \vspace*{-0.5cm}
 \begin{itemize}
     \item $\mathbf{x} \in \mathbb{C}^{N \times 1}$ (Länge $N$) und $\hat{\mathbf{x}} \in \mathbb{C}^{M \times 1}$ (Länge $M$)
-    \item $F_u \in \mathbb{C}^{M\times N}$, ($M > N$) hat mehr Spalten als Zeilen. Das Subscript u steht für undersampling.
+    \item $F_u \in \mathbb{C}^{M\times N}$, ($M < N$) hat mehr Spalten als Zeilen. Das Subscript u steht für undersampling.
     \item Das Gleichungssystem $\hat{\mathbf{x}} = F_u \mathbf{x}$ ist unterbestimmt, i.e. wir haben $M$ Gleichungen und $N$ Unbekannte, wobei $M < N$.
-    \item[] $\implies \mathbf{x}$ kann \textcolor{red}{nicht} aus $\mathbf{x}$ zurückgewonnen werden.
+    \item[] $\implies \mathbf{x}$ kann \textcolor{red}{nicht} aus $\hat{\mathbf{x}}$ zurückgewonnen werden.
 \end{itemize}
 
 
